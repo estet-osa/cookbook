@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome to cookbook!{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}{% endblock %}">
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css?%s') | format(random(998)) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/views.css?%s') | format(random(998)) }}">
+    {% endblock %}
+
+    {% block javascripts %}
+        <script type="text/javascript" async src="{{ asset('js/lib.js?%s')      | format(random(998)) }}"></script>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+
+</body>
+</html>

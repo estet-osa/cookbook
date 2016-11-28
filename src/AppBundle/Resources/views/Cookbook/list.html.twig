@@ -1,0 +1,98 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                <div class="tsk_result">
+                    <div class="srch_result">
+                        <span>Всего <abbr>{{ recipes|length }}</abbr> рецептов</span>
+                    </div>
+                    <ul id="tab_view_list" class="tab_list">
+                        <li onclick="task.view(this, 'task_default')">
+                            <div class="default"></div>
+                        </li>
+                        <li class="active" onclick="task.view(this, 'task_list')" class="">
+                            <div class="simple"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <ul id="recipe_list" class="task_list"><!-- Recipes list -->
+
+                    {% if recipes is defined %}
+                        {% for item in recipes %}
+                            <li id="recipe{{ item.id }}">
+                                <div class="task">
+                                    <div class="inner">
+                                        <div class="tsk_img">
+                                            <a href="/show/{{ item.id }}">
+                                                <img src="/uploads/{{ item.brochure }}">
+                                            </a>
+                                        </div>
+                                        <div class="nav_wrapper">
+                                            <div class="task_remove">
+                                                <div class="rmv_helper_cont">
+                                                    <div class="task_rmv_txt">удалить</div>
+                                                    <div class="hlp_triangle"></div>
+                                                </div>
+                                                <img src="/img/close.gif" onmouseover="task.hlp_show(this)" onmouseout="task.hlp_hide(this)" onclick="task.remove(this)">
+                                            </div>
+                                            <a href="/show/{{ item.id }}" class="task_link">{{ item.title }}</a>
+                                        </div>
+                                        <p class="task_description">{{ item.description[0:200] }}...</p>
+
+                                        <div class="task_info_wrapper">
+                                            <div class="task_info_inner">
+                                                <a href=""><abbr class="today">{{ item.created | date('d.m.y в H:i') }}</abbr></a><span class="point"></span>
+                                                <a href="/edit/{{ item.id }}"> Редактировать</a>
+                                            </div>
+                                            <div class="task_btns_wrapper">
+                                                <div class="jornal_hlp">
+                                                    <div class="task_jornal_txt">Добавить в журнал</div>
+                                                    <div class="hlp_triangle"></div>
+                                                </div>
+                                                <div class="task_response" onmouseover="task.hlp_jornal(this)" onmouseout="task.hlp_hideJornal(this)" onclick="task.addJornal(this)">
+                                                    <div class="cover"><img src="/img/checked.gif"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="right">
+
+                <ul class="menu_list">
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Журнал</span>
+                            <span class="jornal_cnt"></span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Удаленные рецепты</span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}

@@ -1,0 +1,363 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+li{list-style-type: none}
+
+body{
+    overflow-y: scroll;
+    font-family: Roboto, sans-serif;
+}
+a{text-decoration: none;}
+
+.none{display: none;}
+.hidden{visibility: hidden;}
+.fixed{position: fixed;}
+
+::-webkit-input-placeholder {color: #888;}
+::-moz-placeholder          {color: #888;}
+:-moz-placeholder           {color: #888;}
+:-ms-input-placeholder      {color: #888;}
+
+input:focus::-webkit-input-placeholder {color: transparent;}
+input:focus::-moz-placeholder          {color: transparent;}
+input:focus:-moz-placeholder           {color: transparent;}
+input:focus:-ms-input-placeholder      {color: transparent;}
+
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Thin'), local('Roboto-Thin'), url('/img/fonts/roboto/Robotothin.woff2') format('woff2'), url('/img/fonts/roboto/Robotothin.woff') format('woff'), url('/img/fonts/roboto/Robotothin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'), url('/img/fonts/roboto/Robotothinitalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotothinitalic.woff') format('woff'), url('/img/fonts/roboto/Robotothinitalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Light'), local('Roboto-Light'), url('/img/fonts/roboto/Robotolight.woff2') format('woff2'), url('/img/fonts/roboto/Robotolight.woff') format('woff'), url('/img/fonts/roboto/Robotolight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url('/img/fonts/roboto/Robotolightitalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotolightitalic.woff') format('woff'), url('/img/fonts/roboto/Robotolightitalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), local('Roboto-Regular'), url('/img/fonts/roboto/Roboto.woff2') format('woff2'), url('/img/fonts/roboto/Roboto.woff') format('woff'), url('/img/fonts/roboto/Roboto.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Italic'), local('Roboto-Italic'), url('/img/fonts/roboto/Robotoitalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotoitalic.woff') format('woff'), url('/img/fonts/roboto/Robotoitalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Medium'), local('Roboto-Medium'), url('/img/fonts/roboto/Robotomedium.woff2') format('woff2'), url('/img/fonts/roboto/Robotomedium.woff') format('woff'), url('/img/fonts/roboto/Robotomedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'), url('/img/fonts/roboto/Robotomediumitalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotomediumitalic.woff') format('woff'), url('/img/fonts/roboto/Robotomediumitalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Bold'), local('Roboto-Bold'), url('/img/fonts/roboto/Robotobold.woff2') format('woff2'), url('/img/fonts/roboto/Robotobold.woff') format('woff'), url('/img/fonts/roboto/Robotobold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url('/img/fonts/roboto/Robotobolditalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotobolditalic.woff') format('woff'), url('/img/fonts/roboto/Robotobolditalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Black'), local('Roboto-Black'), url('/img/fonts/roboto/Robotoblack.woff2') format('woff2'), url('/img/fonts/roboto/Robotoblack.woff') format('woff'), url('/img/fonts/roboto/Robotoblack.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url('/img/fonts/roboto/Robotoblackitalic.woff2') format('woff2'), url('/img/fonts/roboto/Robotoblackitalic.woff') format('woff'), url('/img/fonts/roboto/Robotoblackitalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/*=== all ===*/
+.all{
+    width: 100%;
+    min-height: 100%;
+}
+
+/*=== header ===*/
+.header{
+    width: 100%;
+    min-height: 80px;
+    border-bottom: #E6E6E6 solid 1px;
+}
+.header > .inner{
+    max-width: 880px;
+    margin: 0 auto;
+}
+.header > .inner:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.search{
+    height: 35px;
+    overflow: hidden;
+    margin: 22px 0 0 0;
+    float: left;
+}
+a.add_recipe_btn{
+    width: 170px;
+    height: 38px;
+    font-size: 14px;
+    line-height: 38px;
+    vertical-align: middle;
+    background: #FFD633;
+    margin: 17px 0 0 0;
+    color: #333;
+    font-family: Roboto, sans-serif;
+    border-bottom: #BE9F26 solid 1px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    float: right;
+
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+a.add_recipe_btn:before{
+    content: '+';
+    width: 20px;
+    display: block;
+    position: absolute;
+    font-size: 21px;
+    font-family: Tahoma, sans-serif;
+    margin: 1px 0 0 6px;
+    font-weight: 600;
+    color: #333;
+}
+a.add_recipe_btn:hover{background: #FFE779}
+
+.search > a.home{
+    width: 40px;
+    height: 35px;
+    display: block;
+    float: left;
+    background: #FFD633 url("/img/home.png")no-repeat center center;
+}
+.search > input.srch{
+    width: 450px;
+    height: 31px;
+    padding: 0 7px 0 25px;
+    display: block;
+    float: left;
+    border: #FFD633 solid 2px;
+    outline: none;
+}
+.search > input.srch + span{
+    width: 0;
+    height: 35px;
+    position: relative;
+    left: 40px;
+    display: block;
+    background: #FFD633;
+
+-webkit-transition: width 0.15s ease-in-out;
+-moz-transition: width 0.15s ease-in-out;
+-ms-transition: width 0.15s ease-in-out;
+-o-transition: width 0.15s ease-in-out;
+transition: width 0.15s ease-in-out;
+}
+.search > input.srch + span:after{
+    content: '';
+    display: block;
+    position: absolute;
+    right: -10px;
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-left: 10px solid #FFD633;
+    border-bottom: 17px solid transparent;
+}
+.search > input.srch:focus + span{
+    width: 10px;
+}
+
+/*=== main ===*/
+.main{
+    max-width: 880px;
+    min-height: 300px;
+    padding: 0 0 50px 0;
+    margin: 0 auto;
+}
+.main:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.main > .left{
+    float: left;
+    width: 600px;
+    min-height: 200px;
+}
+.main > .right{
+    float: right;
+    width: 250px;
+    overflow: hidden;
+    min-height: 300px;
+    background: #F5F5F5;
+    margin: 20px 0 0 0;
+}
+.main > .left > .recipe{
+    margin: 20px 0 0 0;
+}
+.main > .left > .recipe{
+    margin: 20px 0 0 0;
+}
+.main > .left > .recipe > h1{
+    font-size: 25px;
+    color: #111;
+}
+.main > .left > .recipe > .full_description{
+    margin: 7px 0 0 0;
+    color: #777;
+    font-size: 14px;
+}
+.main > .left > .recipe > .picture_wrp{
+    margin: 20px 0;
+    width: 100%;
+}
+.main > .left > .recipe > .picture_wrp img{
+    width: 100%;
+}
+
+/*=== recipe form ===*/
+.recipe_form{
+    width: 450px;
+    margin: 20px 0 0 0;
+}
+.recipe_form > form > div{
+    margin: 20px 0;
+}
+input.recipe_inpt{
+    width: 95%;
+    height: 40px;
+    #background: #F0F0F0;
+    font-size: 15px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    border: #FFD633 solid 2px;
+    outline: none;
+    padding: 0 2%;
+}
+textarea.recipe_area{
+    width: 95%;
+    height: 130px;
+    resize: none;
+    #background: #F0F0F0;
+    font-size: 15px;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    border: #FFD633 solid 2px;
+    outline: none;
+    padding: 7px 2%;
+}
+input.recipe_inpt:after{
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: #000;
+}
+.recipe_form button.save_btn{
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    line-height: 38px;
+    background: #FFD633;
+    margin: 17px 0 0 0;
+    color: #333;
+    border: none;
+    outline: none;
+    font-family: Roboto, sans-serif;
+    border-bottom: #BE9F26 solid 2px;
+    font-weight: 500;
+    cursor: pointer;
+
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+.recipe_form button.save_btn:hover{background: #FEE679}
+
+/*=== menu ===*/
+.menu_list{
+
+}
+.menu_list > li{
+    width: 100%;
+    height: 50px;
+    position: relative;
+    line-height: 50px;
+}
+.menu_list > li > .cover{
+    width: 0;
+    height: 50px;
+    position: relative;
+    background: #FFF;
+    top: 0;
+    margin: -50px auto 0;
+
+-webkit-transition: all 0.15s ease-in-out;
+-moz-transition: all 0.15s ease-in-out;
+-ms-transition: all 0.15s ease-in-out;
+-o-transition: all 0.15s ease-in-out;
+transition: all 0.15s ease-in-out;
+}
+.menu_list > li:hover > .cover{
+    width: 100%;
+}
+.menu_list > li > a{
+    width: 100%;
+    #background: #CCC;
+    display: block;
+    color: #555;
+    cursor: pointer;
+    z-index: 100;
+    position: relative;
+    font-size: 14px;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.menu_list > li > a > span{
+
+}
+.recipe_more_links{
+    margin: 20px 0;
+}
+.recipe_more_links > a{
+    font-size: 14px;
+    color: #222;
+    text-decoration: underline;
+}
+.recipe_more_links > a:hover{text-decoration: none}

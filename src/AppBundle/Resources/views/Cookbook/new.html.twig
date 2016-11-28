@@ -1,0 +1,57 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" async src="{{ asset('js/lib.js?%s') | format(random(998)) }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                <div class="recipe_form">
+
+                    <h2>Добавить новый рецепт</h2>
+
+                    {{ form_start(form) }}
+
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.description) }}
+
+                    {{ form_end(form) }}
+
+                </div>
+
+
+
+            </div>
+            <div class="right">
+
+                <ul class="menu_list">
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Журнал</span>
+                            <span class="jornal_cnt"></span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Удаленные рецепты</span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}

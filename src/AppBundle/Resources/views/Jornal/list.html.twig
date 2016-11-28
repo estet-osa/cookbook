@@ -1,0 +1,45 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                <br>
+                <br>
+                <h2>Layout in work...</h2>
+
+                <ul id="recipe_list" class="task_list"><!-- Recipes list -->
+
+                </ul>
+            </div>
+            <div class="right">
+
+                <ul class="menu_list">
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Журнал</span>
+                            <span class="jornal_cnt"></span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                    <li>
+                        <a href="/jornal">
+                            <span class="txt">Удаленные рецепты</span>
+                        </a>
+                        <div class="cover"></div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock body %}
