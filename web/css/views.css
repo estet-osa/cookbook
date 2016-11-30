@@ -121,8 +121,7 @@ transition-delay:0.5s;
     -o-transition:all 0.2s ease-in-out;
     -moz-transition:all 0.2s ease-in-out;
 }
-.task_remove > img:hover{opacity:1 !important;filter:alpha(opacity=0);}
-
+.task_remove > img:hover{opacity:1 !important;filter:alpha(opacity=0)}
 
 /*=== recipe list default ===*/
 .task_default > li > .task{
@@ -399,9 +398,6 @@ transition:all 0.2s ease-in-out;
 .task_response{border:#D6D6D6 solid 1px;}
 .task_response-active{border:#888 solid 1px;}
 
-.task_response, .task_response-active{
-
-}
 .task_list > li > .task > .inner > .task_info_wrapper > .task_btns_wrapper .cover{
     position:absolute;
     width: 0;
@@ -429,7 +425,6 @@ transition:all 0.2s ease-in-out;
     margin: 3px 10px 0 0;
     float: right;
 }
-
 .task_list > li > .task > .inner > .nav_wrapper > .task_remove > .rmv_helper_cont{
     visibility: hidden;
     margin: -27px 0 0 -20px;

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Ingredients;
 use AppBundle\Entity\Recipe;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -16,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use AppBundle\Form\IngredientsType;
 
 /**
  * Class DefaultController
@@ -161,22 +159,22 @@ class DefaultController extends Controller
         $json = json_decode($data);
         $findString  = $json->searchStr;
 
-        $em = $this->getDoctrine()->getManager();
+        $em  = $this->getDoctrine()->getManager();
+        $sql = "SELECT id, created, title, description, brochure FROM recipe
+                WHERE title LIKE '%{$findString}%' AND is_active = 1";
 
-        $query = $em->createQuery(
-            'SELECT recipe
-              FROM AppBundle:Recipe recipe
-                WHERE recipe.title LIKE :str
-                  ORDER BY recipe.id ASC'
-        )->setParameter('str', '%' . $findString . '%');
-
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('created', 'created');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('description', 'description');
+        $rsm->addScalarResult('brochure', 'brochure');
+        $rsm->addScalarResult('is_active', 'is_active');
+        $query = $em->createNativeQuery($sql, $rsm);
         $recipe = $query->getResult();
 
-        $serializer = $this->get('serializer');
-        $json = $serializer->serialize($recipe, 'json');
-
         if ($recipe)
-            return new Response($json);
+            return new JsonResponse($recipe);
         else
             return new Response('not_found');
     }
@@ -201,7 +199,6 @@ class DefaultController extends Controller
      */
     function jornalAction()
     {
-
         return $this->render('AppBundle:Jornal:list.html.twig');
     }
 }

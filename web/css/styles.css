@@ -182,11 +182,11 @@ a.add_recipe_btn:hover{background: #FFE779}
     display: block;
     background: #FFD633;
 
--webkit-transition: width 0.15s ease-in-out;
--moz-transition: width 0.15s ease-in-out;
--ms-transition: width 0.15s ease-in-out;
--o-transition: width 0.15s ease-in-out;
-transition: width 0.15s ease-in-out;
+-webkit-transition: width 0.2s ease-in-out;
+-moz-transition: width 0.2s ease-in-out;
+-ms-transition: width 0.2s ease-in-out;
+-o-transition: width 0.2s ease-in-out;
+transition: width 0.2s ease-in-out;
 }
 .search > input.srch + span:after{
     content: '';
@@ -199,9 +199,7 @@ transition: width 0.15s ease-in-out;
     border-left: 10px solid #FFD633;
     border-bottom: 17px solid transparent;
 }
-.search > input.srch:focus + span{
-    width: 10px;
-}
+.search > input.srch:focus + span{width: 12px}
 
 /*=== main ===*/
 .main{
@@ -228,16 +226,14 @@ transition: width 0.15s ease-in-out;
     background: #F5F5F5;
     margin: 20px 0 0 0;
 }
-.main > .left > .recipe{
-    margin: 20px 0 0 0;
-}
+.main > .left > .recipe{margin: 20px 0 0 0}
+
 .main > .left > .recipe > h1{
     font-size: 27px;
     color: #111;
 }
-.main > .left > .recipe h2, h3, h4{
-    color: #444;
-}
+.main > .left > .recipe h2, h3, h4{color: #444}
+
 .main > .left > .recipe p{
     margin: 15px 0;
     font-size: 15px;
@@ -316,9 +312,6 @@ border-radius: 4px;
 .recipe_form button.save_btn:hover{background: #FEE679}
 
 /*=== menu ===*/
-.menu_list{
-
-}
 .menu_list > li{
     width: 100%;
     height: 50px;
@@ -354,12 +347,8 @@ transition: all 0.15s ease-in-out;
     vertical-align: middle;
     padding: 0 10px;
 }
-.menu_list > li > a > span{
-    display: inline-block;
-}
-.menu_list > li > a > span.txt{
+.menu_list > li > a > span{display: inline-block}
 
-}
 .menu_list > li > a > span.jornal_cnt{
     height: 20px;
     line-height: 20px;
@@ -500,9 +489,7 @@ ul.ingrdt_group_nav_list > li span{
     vertical-align: middle;
     display: inline-block;
 }
-ul.ingrdt_group_nav_list > li:hover span{
-    color: #111;
-}
+ul.ingrdt_group_nav_list > li:hover span{color: #111}
 
 /*=== ingredients tabs content ===*/
 .ingr_tabs_wrp{
@@ -565,32 +552,3 @@ ul.ingredients_list > li > .inner > span.count{
 border-radius: 3px;
 }
 .export_to:hover{background: #FFE779 url('../img/envelop.png')no-repeat 8px center}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -206,7 +206,6 @@ var task = {
                     firstChildInpt.focus();
                 }, 5);
             }
-
         }
 
         return false;
@@ -252,8 +251,8 @@ var task = {
 
     createIngredientForm : function() {
 
-        var LI = create('LI'),
-            COVER = create('DIV'),
+        var LI      = create('LI'),
+            COVER   = create('DIV'),
             IN_DIV  = create('DIV'),
             INPT    = create('INPUT');
 
@@ -530,7 +529,9 @@ var srch = {
 
     find : function (elem) {
 
-        var val = elem.value.trim();
+        var recipes = JSON.parse(localStorage.getItem("recipes")),
+            list    = getId('recipe_list'),
+            val = elem.value.trim();
 
         var params = {
             url : '/recipe/find',
@@ -542,17 +543,20 @@ var srch = {
             // Send params & get json data
             $.ajax(params, function(entries){
 
-                if (typeof entries == 'string' && entries != 'not_found') {
+                if(typeof entries == 'string' && entries != 'not_found'){
 
                     var json = srch.isJson(entries);
 
-                    if (json) {
-
+                    if(json){
                         var list = getId('recipe_list');
                             list.innerHTML = '';
 
                         for(var key in json)
-                            list.appendChild(srch.createSearchingElement(json[key]));
+                            if(json[key].description != undefined)
+                                list.appendChild(srch.createSearchingElement(json[key]));
+
+                        // Set active found recipes if exists in localStorage vars
+                        task.switchActiveInRecipeList(list, recipes.ids);
                     }
                 }
             });
@@ -564,6 +568,7 @@ var srch = {
             TASK            = create('DIV'),
             INNER           = create('DIV'),
             TSK_IMG_WRP     = create('DIV'),
+            TSK_IMG_LINK    = create('a'),
             TSK_IMG         = create('IMG'),
             NAV_WRAPPER     = create('DIV'),
             TSK_REMOVE      = create('DIV'),
@@ -587,9 +592,11 @@ var srch = {
             COVER           = create('DIV'),
             COVER_IMG       = create('IMG');
 
+        LI.id = 'recipe' + obj.id;
         TASK.className = 'task';
           INNER.className = 'inner';
             TSK_IMG_WRP.className = 'tsk_img';
+              TSK_IMG_LINK.href = '/show/' + obj.id;
               TSK_IMG.src = '/uploads/' + obj.brochure;
             NAV_WRAPPER.className = 'nav_wrapper';
               TSK_REMOVE.className = 'task_remove';
@@ -605,7 +612,7 @@ var srch = {
             LINK_MORE.innerHTML  = obj.title;
             LINK_MORE.href = '/show/' + obj.id;
           DESCRIPTION.className = 'task_description';
-          DESCRIPTION.innerHTML = obj.description.substr(0, 200);
+          DESCRIPTION.innerHTML = obj.description.replace(/(<([^>]+)>)/ig,"").substr(0, 200);
           INFO_WRP.className = 'task_info_wrapper';
             INFO_INNER.className = 'task_info_inner';
               CREATED.href = '';
@@ -629,7 +636,8 @@ var srch = {
         LI.appendChild(TASK);
           TASK.appendChild(INNER);
             INNER.appendChild(TSK_IMG_WRP);
-              TSK_IMG_WRP.appendChild(TSK_IMG);
+              TSK_IMG_WRP.appendChild(TSK_IMG_LINK);
+              TSK_IMG_LINK.appendChild(TSK_IMG);
             INNER.appendChild(NAV_WRAPPER);
               NAV_WRAPPER.appendChild(TSK_REMOVE);
                 TSK_REMOVE.appendChild(RMV_HELPER);
