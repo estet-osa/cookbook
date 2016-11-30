@@ -2,92 +2,72 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Ingredients;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Form\RecipeType;
 use AppBundle\Form\IngredientsType;
 
-
+/**
+ * Class IngredientsController
+ * @package AppBundle\Controller
+ */
 class IngredientsController extends Controller
 {
     /**
-     * @Route("/ingredients/list", name="ingredient_list")
-     */
-    public function indexAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $list = $em->getRepository('AppBundle:Recipe')->findAll();
-
-        return $this->render('AppBundle:Ingredients:list.html.twig', [
-            'recipes' => $list
-        ]);
-    }
-
-    /**
-     * @Route("/ingredients/new", name="newIngredient")
+     * @Route("/ingredient/add", name="newIngredient")
      */
     public function newAction(Request $request)
     {
-        $ingredient = new Ingredients();
-        $form = $this->createForm(IngredientsType::class, $ingredient);
-        $form->handleRequest($request);
-        $em = $this->getDoctrine()->getManager();
+        $newValue   = $request->request->get('data');
+        $referer    = explode('/', $request->headers->get('referer'));
+        $recipeId   = $referer[4] ?? false;
 
-        if ($form->isSubmitted() && $form->isValid()){
+        $em     = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($recipeId);
 
-            $ingredient = $form->getData();
-            $em->persist($ingredient);
-            $em->flush();
+        if(!$recipe)
+            throw $this->createNotFoundException('No recipe found for id ' . $recipe);
+        else{
 
-            return $this->redirect('/');
+            $ingredient = new Ingredients();
+
+            if($recipe){
+
+                $ingredient->setTitle($newValue);
+                $ingredient->setRecipe($recipe);
+
+                $em->persist($ingredient);
+                $em->flush();
+            }
+
+            return new Response('ok');
         }
-
-        return $this->render('AppBundle:Ingredients:new.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 
     /**
-     * @Route("/ingredients/show/{cookbookId}", name="show$Ingredient")
+     * @route("/ingredients/jornal")
      */
-    public function showAction($cookbookId, Request $request)
+    public function showAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $recipe = $em->getRepository('AppBundle:Recipe')->find($cookbookId);
+        $data = $request->request->get('data');
+        $json = json_decode($data);
+        $ids  = implode(',', $json->ids);
 
-        return $this->render('AppBundle:Ingredients:show.html.twig', [
-            'recipe' => $recipe
-        ]);
-    }
+        $em  = $this->getDoctrine()->getManager();
+        $sql = "SELECT title, count(title) as cnt FROM ingredients
+                WHERE recipe_id IN ({$ids})
+                GROUP BY title";
 
-    /**
-     * @Route("/ingredients/edit/{ingredientId}", name="editIngredient")
-     */
-    public function editAction($ingredientId, Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:Recipe')->find($ingredientId);
-        $form = $this->createForm(RecipeType::class, $user);
-        $successFormEditable = false;
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('cnt', 'cnt');
+        $query = $em->createNativeQuery($sql, $rsm);
+        $recipe = $query->getResult();
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $data = $form->getData();
-            $em->persist($data);
-            $em->flush();
-
-            return $this->redirect('/show/' . $ingredientId);
-        }
-
-        return $this->render('AppBundle:Ingredients:edit.html.twig', [
-            'form'    => $form->createView(),
-            'success' => $successFormEditable,
-        ]);
+        return new JsonResponse($recipe);
     }
 }

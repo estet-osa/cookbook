@@ -3,12 +3,17 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use AppBundle\Entity\Ingredients;
 
 class RecipeType extends AbstractType
@@ -24,17 +29,21 @@ class RecipeType extends AbstractType
                         'class' => 'recipe_inpt'
                     )
             ))
-            ->add('description', TextareaType::class, array(
+            ->add('description', CKEditorType::class, array(
                 'label'=> 'Описание блюда',
-                'attr' => [
-                    'placeholder' => 'Подробное описание, рецепт',
-                    'class' => 'recipe_area'
-                ])
-            )
+                'required'  => true,
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                ),
+            ))
             ->add('brochure', FileType::class, [
                 'label' => 'Attach image',
                 'data_class' => null
             ])
+            ->add('ingredient', CollectionType::class, array(
+                'entry_type' => IngredientsType::class,
+                'allow_add'    => true,
+            ))
             ->add('save', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr'  => array(

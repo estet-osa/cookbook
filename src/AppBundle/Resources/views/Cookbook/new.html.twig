@@ -20,14 +20,31 @@
 
                     {{ form_start(form) }}
 
-                        {{ form_row(form.title) }}
-                        {{ form_row(form.description) }}
+                        {{ form_row(form.title, {
+                            'label'     : 'Название блюда',
+                            'required'  : true,
+                            'attr'      : { 'placeholder' : 'Название блюда', 'class' : 'recipe_inpt' }
+                        }) }}
+
+                        {{ form_row(form.description, {
+                            'label'     : 'Описание блюда',
+                            'required'  : true,
+                            'attr'      : { 'placeholder' : 'Подробное описание, рецепт', 'class' : 'recipe_area' }
+                        }) }}
+
+                        {{ form_row(form.brochure, {
+                            'label'     : 'Добавьте картинку',
+                            'required'  : true,
+                        }) }}
+
+                        {{ form_row(form.save, {
+                            'label'     : 'Сохранить',
+                            'attr'      : { 'class' : 'save_btn' }
+                        }) }}
 
                     {{ form_end(form) }}
 
                 </div>
-
-
 
             </div>
             <div class="right">
@@ -36,7 +53,7 @@
                     <li>
                         <a href="/jornal">
                             <span class="txt">Журнал</span>
-                            <span class="jornal_cnt"></span>
+                            <span id="jornalCnt" class="jornal_cnt">12</span>
                         </a>
                         <div class="cover"></div>
                     </li>

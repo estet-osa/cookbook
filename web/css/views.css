@@ -18,9 +18,10 @@
 }
 .tab_list{
     width: 70px;
-    height:25px;
-    border-radius:3px;
-    float:right;
+    height: 25px;
+    margin: 5px 0 0 0;
+    border-radius: 3px;
+    float: right;
 }
 .tab_list li{
     width:35px;
@@ -36,7 +37,7 @@
 .tab_list li .default, .extender, .simple{
     width:10px;
     height:10px;
-    margin:8px auto 0;
+    margin: 8px auto 0;
 }
 .tab_list li > .default{background:url("../img/tab_view.png") no-repeat center -60px;}
 .tab_list li.active > .default{background:url('../img/tab_view.png')no-repeat center -75px;}
@@ -219,9 +220,14 @@ transition-delay:0.5s;
 .task_default > li > .task > .inner > .task_info_wrapper > .task_info_inner > a:hover{text-decoration:underline;}
 
 .task_default > li > .task > .inner > .task_info_wrapper > .task_btns_wrapper{
-    width:20px;
-    height:20px;
-    float:right;
+    width: 20px;
+    height: 20px;
+    float: right;
+
+-ms-user-select: none;
+-moz-user-select: none;
+-khtml-user-select: none;
+-webkit-user-select: none;
 }
 .task_response, .task_response-active{
     width:17px;
@@ -265,9 +271,14 @@ transition:all 0.2s ease-in-out;
     margin:3px 5px 0 0px;
     float:right;
 }
-
-.task_default > li > .task > .inner > .nav_wrapper > .task_remove > .rmv_helper_cont{margin:-27px 0 0 -20px;}
-.task_default > li > .task > .inner > .task_info_wrapper > .task_btns_wrapper > .jornal_hlp{margin:-32px 0 0 -20px;}
+.task_default > li > .task > .inner > .nav_wrapper > .task_remove > .rmv_helper_cont{
+    visibility: hidden;
+    margin:-27px 0 0 -20px;
+}
+.task_default > li > .task > .inner > .task_info_wrapper > .task_btns_wrapper > .jornal_hlp{
+    visibility: hidden;
+    margin:-32px 0 0 -20px;
+}
 
 .task_default > li > .task > .inner > .task_info_wrapper > .task_btns_wrapper > .jornal_hlp > .hlp_triangle{
     display: block;

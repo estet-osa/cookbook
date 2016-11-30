@@ -2,6 +2,23 @@
 
 var d = document, w = window;
 
+w.onload = function () {
+
+    if(getId('ingredientList'))
+        if(getId('ingredientList').children.length <= 0)
+            getId('recipe_ingredient').previousElementSibling.style.display = 'none';
+
+    // Change view recipes list if exist ul#recipes_list
+    task.changeView();
+
+    // View jornal list & show jornal links
+    task.jornalView();
+
+    if(getId('formingIngredients'))
+        task.showFormingIngredients();
+
+};
+
 function getId(id){
     return document.getElementById(id)
 }
@@ -11,6 +28,245 @@ function create(elem){
 }
 
 var task = {
+
+    showFormingIngredients : function() {
+
+        var recipes = JSON.parse(localStorage.getItem("recipes")),
+            list    = getId('formingIngredients');
+
+        if(recipes && recipes.ids.length > 0){
+
+            // Hide notification form empty jornal list
+            getId('ingr_head').style.display = 'none';
+            getId('ingredients_block').style.display = 'block';
+
+            var params = {
+                url : '/ingredients/jornal',
+                data : JSON.stringify(recipes),
+                method : 'post'
+            };
+
+            if(list){
+
+                // Send params & get json data
+                $.ajax(params, function(entries){
+
+                    var json = JSON.parse(entries);
+
+                    if(json){
+
+                        // Cliar old list
+                        list.innerHTML = '';
+
+                        for(var key in json){
+
+                            if(json[key].title && json[key].cnt)
+                                list.appendChild(task.createJornalElements(json[key]));
+                        }
+                    }
+                });
+            }
+
+        }else{
+
+            // Show notification form empty jornal list
+            getId('ingr_head').style.display = 'block';
+            getId('ingredients_block').style.display = 'none';
+        }
+    },
+
+    createJornalElements : function(key){
+
+        var LI      = create('LI'),
+            INNER   = create('DIV'),
+            TXT     = create('SPAN'),
+            COUNT   = create('SPAN');
+
+        INNER.className = 'inner';
+          TXT.className = 'txt';
+          TXT.innerHTML = key.title;
+          COUNT.className = 'count';
+          COUNT.innerHTML = key.cnt + ' шт.';
+
+        LI.appendChild(INNER);
+          INNER.appendChild(TXT);
+          INNER.appendChild(COUNT);
+
+        return LI
+    },
+
+    jornalView : function(){
+
+        var recipes = JSON.parse(localStorage.getItem("recipes")),
+            list    = getId('recipe_list'),
+            elem    = getId('jornalCnt');
+
+        if(recipes){
+
+            var recipesCount = recipes.ids.length;
+
+            if(recipesCount > 0){
+
+                elem.style.display = 'block';
+                elem.innerHTML = recipesCount;
+            }else{
+
+                elem.style.display = 'none';
+                elem.innerHTML = '';
+            }
+
+            // Set active & not active jornal tools in Recipe list
+            if(list)
+                task.switchActiveInRecipeList(list, recipes.ids);
+        }
+    },
+
+    switchActiveInRecipeList : function(list, recipesArr){
+
+        var currRecipeId = false;
+
+        for(var i = 0; i < list.children.length; i++){
+
+            currRecipeId = list.children[i].id.substr(6);
+
+            if(task.findValFromArr(recipesArr, currRecipeId) != -1){
+
+                // Set active to current list item
+                var activeWrapper = list.children[i].querySelector('.task_btns_wrapper').children[1];
+                    activeWrapper.className = 'task_response-active';
+                    activeWrapper.children[0].className = 'cover-active';
+                    activeWrapper.children[0].style.width = '11px';
+
+                list.children[i].querySelector('.task_jornal_txt').innerHTML = 'Убрать из журнала';
+            }
+        }
+    },
+
+    /**
+     * Find value in array
+     *
+     * @param array
+     * @param value
+     * @returns {*}
+     */
+    findValFromArr : function(array, value) {
+
+        if(array.indexOf) return array.indexOf(value);
+
+        for(var i = 0; i < array.length; i++)
+            if (array[i] === value) return i;
+
+        return -1;
+    },
+
+    checkEditableForm : function(list) {
+
+        for(var i = 0; i < list.children.length; i++)
+            if(list.children[i].className == 'editable')
+                return false;
+    },
+
+    newIngredient : function() {
+
+        var list = getId('ingredientList');
+
+        if (!list.children[0]) {
+            var elem = task.createIngredientForm();
+            list.appendChild(elem[0]);
+            list.children[0].className = 'editable';
+            task.newIngredient()
+        }
+
+        var firstChildInpt  = list.children[0].querySelector('input');
+        var parentCover     = firstChildInpt.parentNode.parentNode;
+
+        if(firstChildInpt && parentCover){
+
+            if(firstChildInpt && firstChildInpt.value != '' && (false !== task.checkEditableForm(list))) {
+
+                    elem = task.createIngredientForm();
+
+                    if(list.children.length > 0)
+                        list.insertBefore(elem[0], list.children[0]);
+
+                    elem[0].className = 'editable';
+
+                // Set focus
+                elem[1].focus();
+
+            }else{
+
+                parentCover.className = 'cover';
+                parentCover.style.background = '#FF9466';
+
+                setTimeout(function() {
+
+                    parentCover.className = 'cover-active';
+                    parentCover.style.background = 'transparent';
+                    firstChildInpt.focus();
+                }, 5);
+            }
+
+        }
+
+        return false;
+    },
+
+    saveIngredient : function(event) {
+
+        var list = getId('ingredientList');
+
+        if(event.keyCode == 13){
+
+            var currLi      = event.target.parentNode.parentNode.parentNode,
+                parentCover = currLi.children[0];
+
+                parentCover.className = 'cover';
+                parentCover.style.background = '#FFD633';
+
+                setTimeout(function() {
+
+                    parentCover.className = 'cover-active';
+                    parentCover.style.background = 'transparent';
+                    currLi.className = '';
+                    event.target.blur();
+
+                }, 5);
+
+            // Forming the param
+            var params = {
+                url : '/ingredient/add',
+                data : event.target.value.trim(),
+                method : 'post'
+            };
+
+            // Send params & get json data
+            $.ajax(params, function(entry){
+
+                console.log('del: ', entry);
+            });
+
+            return false;
+        }
+    },
+
+    createIngredientForm : function() {
+
+        var LI = create('LI'),
+            COVER = create('DIV'),
+            IN_DIV  = create('DIV'),
+            INPT    = create('INPUT');
+
+            COVER.className = 'cover';
+            INPT.type = 'text';
+            INPT.setAttribute('onkeydown', 'return task.saveIngredient(event)');
+
+            LI.appendChild(COVER);
+              COVER.appendChild(IN_DIV);
+                IN_DIV.appendChild(INPT);
+
+        return [LI, INPT];
+    },
 
     /**
      * Change recipes view
@@ -33,6 +289,37 @@ var task = {
 
         //will enable
         elem.className = 'active';
+
+        localStorage.setItem('view', curr);
+    },
+
+    /**
+     * Change view recipes list
+     */
+    changeView : function() {
+
+        var list    = getId('recipe_list'),
+            tabList = getId('tab_view_list'),
+            viewKey = localStorage.getItem('view');
+
+        if(list){
+
+            // Clear class for li
+            for(var i = 0; i < tabList.children.length; i++)
+                tabList.children[i].className = '';
+
+            // Set 'active' class for current tab
+            if(viewKey == 'task_default')
+                tabList.children[0].className = 'active';
+            else
+                tabList.children[1].className = 'active';
+
+            // Set current view class for ul#recipe_list
+            if(viewKey)
+                list.className = viewKey;
+            else
+                list.className = 'task_list';
+        }
     },
 
     /**
@@ -67,7 +354,6 @@ var task = {
         $.ajax(params, function(entry){
 
             console.log('del: ', entry);
-
         });
     },
 
@@ -93,7 +379,6 @@ var task = {
             currElem.style.visibility = 'hidden';
     },
 
-
     /**
      * Show jornal helper
      * @param elem
@@ -117,10 +402,14 @@ var task = {
     },
 
     /**
-     * Add new task in JORNAL
+     * Add new recipe in JORNAL
      * @param elem
      */
     addJornal : function(elem){
+
+        var currLi = elem.parentNode.parentNode.parentNode.parentNode.parentNode,
+            currId = currLi.id.substr(6),
+            recipes = JSON.parse(localStorage.getItem("recipes"));
 
         //Add task
         if(elem.className == 'task_response'){
@@ -130,12 +419,48 @@ var task = {
 
             elem.parentNode.children[0].children[0].innerHTML = 'Убрать из журнала';
 
+            if(recipes){
+
+                // If current recipe id exists in localStorage
+                if(!(recipes.ids.indexOf(currId) != -1)){
+
+                    recipes.ids.push(currId);
+
+                    var ids = JSON.stringify({ 'ids' : recipes.ids });
+                    localStorage.setItem("recipes", ids);
+
+                    task.jornalView();
+                }
+
+            }else{
+
+                ids = JSON.stringify({ 'ids' : [currId] });
+                localStorage.setItem("recipes", ids);
+                task.jornalView();
+            }
+
             //Delete task
         }else{
+
             elem.className = 'task_response';
             elem.children[0].style.width = '0px';
 
             elem.parentNode.children[0].children[0].innerHTML = 'Добавить в журнал';
+
+            if(recipes){
+
+                if((recipes.ids.indexOf(currId) != -1)){
+
+                    var idxOfarray = recipes.ids.indexOf(currId);
+
+                    recipes.ids.remove(currId);
+
+                    ids = JSON.stringify({ 'ids' : recipes.ids });
+                    localStorage.setItem("recipes", ids);
+
+                    task.jornalView();
+                }
+            }
         }
     },
 
@@ -157,6 +482,21 @@ var task = {
 
         return day + '.' + month + '.' + String(year).substr(2) + ' в ' + hours + ':' + minutes;
     }
+};
+
+/**
+ * Extension for deleting value from Array elements
+ *
+ * @param value
+ * @returns {*}
+ */
+Array.prototype.remove = function(value){
+
+    var idx = this.indexOf(value);
+    if (idx != -1)
+        return this.splice(idx, 1);
+
+    return false;
 };
 
 var $ = {
@@ -190,30 +530,32 @@ var srch = {
 
     find : function (elem) {
 
+        var val = elem.value.trim();
+
         var params = {
             url : '/recipe/find',
-            data : JSON.stringify({searchStr : elem.value.trim()}),
+            data : JSON.stringify({searchStr : val}),
             method : 'post'
         };
 
-        // Send params & get json data
-        $.ajax(params, function(entries){
+        if(val.length > 0)
+            // Send params & get json data
+            $.ajax(params, function(entries){
 
-            if (typeof entries == 'string' && entries != 'not_found') {
+                if (typeof entries == 'string' && entries != 'not_found') {
 
-                var json = srch.isJson(entries);
+                    var json = srch.isJson(entries);
 
-                if (json) {
+                    if (json) {
 
-                    var list = getId('recipe_list');
-                        list.innerHTML = '';
+                        var list = getId('recipe_list');
+                            list.innerHTML = '';
 
-                    for(var key in json)
-                        list.appendChild(srch.createSearchingElement(json[key]));
+                        for(var key in json)
+                            list.appendChild(srch.createSearchingElement(json[key]));
+                    }
                 }
-            }
-
-        });
+            });
     },
 
     createSearchingElement : function (obj) {

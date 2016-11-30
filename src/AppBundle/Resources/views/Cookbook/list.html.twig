@@ -18,7 +18,7 @@
                         <li onclick="task.view(this, 'task_default')">
                             <div class="default"></div>
                         </li>
-                        <li class="active" onclick="task.view(this, 'task_list')" class="">
+                        <li onclick="task.view(this, 'task_list')">
                             <div class="simple"></div>
                         </li>
                     </ul>
@@ -46,7 +46,7 @@
                                             </div>
                                             <a href="/show/{{ item.id }}" class="task_link">{{ item.title }}</a>
                                         </div>
-                                        <p class="task_description">{{ item.description[0:200] }}...</p>
+                                        <p class="task_description">{{ item.description[0:200] | striptags }}...</p>
 
                                         <div class="task_info_wrapper">
                                             <div class="task_info_inner">
@@ -77,7 +77,7 @@
                     <li>
                         <a href="/jornal">
                             <span class="txt">Журнал</span>
-                            <span class="jornal_cnt"></span>
+                            <span id="jornalCnt" class="jornal_cnt">12</span>
                         </a>
                         <div class="cover"></div>
                     </li>

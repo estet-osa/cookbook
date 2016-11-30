@@ -52,89 +52,31 @@ class Recipe
 
     /**
      * @ORM\OneToMany(targetEntity="Ingredients", mappedBy="recipe")
-     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
     private $ingredient;
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $is_active = true;
 
     /**
-     * Set created
+     * @ORM\Column(type="string", nullable=false)
      *
-     * @param \DateTime $created
-     *
-     * @return Recipe
+     * @Assert\NotBlank(message="Please, upload the recipe image file.")
+     * @Assert\File(mimeTypes={ "image/*" })
      */
-    public function setCreated($created)
+    private $brochure;
+
+    public function getBrochure()
     {
-        $this->created = $created;
+        return $this->brochure;
+    }
+
+    public function setBrochure($brochure)
+    {
+        $this->brochure = $brochure;
 
         return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Recipe
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Recipe
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 }

@@ -52,7 +52,6 @@ class Recipe
 
     /**
      * @ORM\OneToMany(targetEntity="Ingredients", mappedBy="recipe")
-     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
      */
     private $ingredient;
 
@@ -79,6 +78,13 @@ class Recipe
         $this->brochure = $brochure;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ingredient = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -162,12 +168,29 @@ class Recipe
     {
         return $this->description;
     }
+
     /**
-     * Constructor
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Recipe
      */
-    public function __construct()
+    public function setIsActive($isActive)
     {
-        $this->ingredient = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
     }
 
     /**
@@ -202,29 +225,5 @@ class Recipe
     public function getIngredient()
     {
         return $this->ingredient;
-    }
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return Recipe
-     */
-    public function setIsActive($isActive)
-    {
-        $this->is_active = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->is_active;
     }
 }

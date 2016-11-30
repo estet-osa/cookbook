@@ -34,15 +34,4 @@ class Ingredients
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $title;
-
-    /**
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 20000,
-     *      minMessage = "Минимальное колличество символов описания, должно быть больше чем {{ limit }}.",
-     *      maxMessage = "Максимальное колличество символов для описания не должно превышать {{ limit }}."
-     * )
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $description;
 }

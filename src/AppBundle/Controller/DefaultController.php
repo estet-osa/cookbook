@@ -2,14 +2,21 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ingredients;
 use AppBundle\Entity\Recipe;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\RecipeType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use AppBundle\Form\IngredientsType;
 
 /**
  * Class DefaultController
@@ -38,7 +45,18 @@ class DefaultController extends Controller
     public function newAction(Request $request)
     {
         $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe);
+
+        $form = $this->createFormBuilder($recipe)
+            ->add('title', TextType::class)
+            ->add('description', CKEditorType::class, array(
+                'config' => array(
+                    'uiColor' => '#FFFFFF',
+                ),
+            ))
+            ->add('brochure', FileType::class)
+            ->add('save', SubmitType::class)
+            ->getForm();
+
         $form->handleRequest($request);
         $em = $this->getDoctrine()->getManager();
 
@@ -65,7 +83,7 @@ class DefaultController extends Controller
             $em->persist($recipe);
             $em->flush();
 
-            return $this->redirect('/');
+            return $this->redirect('/edit/' . $recipe->getId());
         }
 
         return $this->render('AppBundle:Cookbook:new.html.twig', array(
@@ -76,11 +94,13 @@ class DefaultController extends Controller
     /**
      * @Route("/show/{cookbookId}", name="showCookbook")
      */
-    public function showAction($cookbookId, Request $request)
+    public function showAction($cookbookId)
     {
         $em = $this->getDoctrine()->getManager();
         $recipe = $em->getRepository('AppBundle:Recipe')->find($cookbookId);
 
+        if(!$recipe)
+            throw $this->createNotFoundException('No recipe found for id ' . $recipe);
 
         return $this->render('AppBundle:Cookbook:show.html.twig', [
             'recipe' => $recipe
@@ -94,8 +114,11 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $recipe = $em->getRepository('AppBundle:Recipe')->find($cookbookId);
-        $form = $this->createForm(RecipeType::class, $recipe);
 
+        if(!$recipe)
+            throw $this->createNotFoundException('No recipe found for id ' . $recipe);
+
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -125,7 +148,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle:Cookbook:edit.html.twig', [
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

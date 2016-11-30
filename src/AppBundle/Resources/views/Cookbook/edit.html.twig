@@ -20,6 +20,27 @@
                         {{ form_row(form.description) }}
                         {{ form_row(form.brochure) }}
 
+                        <div class="ingredients_add_wrp">
+
+                            <h2>Ингредиенты</h2>
+
+                            <a href="/ingredients/add" onclick="return task.newIngredient();" class="add_ingredient_btn">Добавить ингериент</a>
+                        </div>
+
+                        <ul id="ingredientList" class="ingredients_list">
+
+                            {% for item in form.ingredient %}
+                                <li id="ingredient">
+                                    <div class="cover">
+                                        {{ form_row(item.title, {
+                                            'label' : false,
+                                            'attr'  : { 'class' : ''}
+                                        }) }}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
                     {{ form_end(form) }}
 
                 </div>
@@ -31,7 +52,7 @@
                     <li>
                         <a href="/jornal">
                             <span class="txt">Журнал</span>
-                            <span class="jornal_cnt"></span>
+                            <span id="jornalCnt" class="jornal_cnt">12</span>
                         </a>
                         <div class="cover"></div>
                     </li>

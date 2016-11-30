@@ -25,7 +25,25 @@
                             </div>
                         {% endif %}
 
-                        <p class="full_description">{{ recipe.description }}</p>
+                        <h2>Рецепт приготовления</h2>
+                        <p class="full_description">{{ recipe.description | raw }}</p>
+
+                        {%  if recipe.ingredient|length > 0 %}
+
+                            <br><h2>Ингредиенты</h2>
+
+                            <ul id="ingredientList" class="ingredients_list">
+
+                                {% for item in recipe.ingredient %}
+                                    <li id="ingredient">
+                                        <div class="cover">
+                                            <span class="item_ingredient">{{ item.title }}</span>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <br>
+                        {% endif %}
 
                         <div class="recipe_more_links">
                             <a href="/edit/{{ recipe.id }}">Редактировать рецепт</a>
@@ -41,7 +59,7 @@
                     <li>
                         <a href="/jornal">
                             <span class="txt">Журнал</span>
-                            <span class="jornal_cnt"></span>
+                            <span id="jornalCnt" class="jornal_cnt">12</span>
                         </a>
                         <div class="cover"></div>
                     </li>
