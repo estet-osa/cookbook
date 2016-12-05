@@ -5,6 +5,7 @@
     <div class="all">
 
         {% include('AppBundle:Templates:header.html.twig') %}
+        {% include('AppBundle:Templates:after.html.twig') %}
 
         <div class="main">
 
@@ -12,18 +13,19 @@
 
                 <div class="ingr_nav_wrp"><!-- ingredient navigate wrapper -->
 
-                    <ul class="ingrdt_group_nav_list">
-                        <li class="active">
+                    <ul id="jornal_view_tabs" class="ingrdt_group_nav_list">
+                        <li class="active" onclick="return rcp.switchJornalTab(this, 'ingredients')">
                             <div class="inner">
                                 <span>Ингредиенты</span>
                             </div>
                         </li>
-                        <li>
+                        <li onclick="return rcp.switchJornalTab(this, 'recipes')">
                             <div class="inner">
                                 <span>Выбранные блюда</span>
                             </div>
                         </li>
                     </ul>
+
                     <ul id="tab_view_list" class="tab_list">
                         <li onclick="task.view(this, 'task_default')">
                             <div class="default"></div>
@@ -35,36 +37,18 @@
 
                 </div>
 
-                <div class="ingr_tabs_wrp">
-                    <h3 id="ingr_head">У вас нет выбранных блюд, сначала необходимо <a href="/">добавить их в журнал.</a></h3>
+                <div id="jornal_views" class="ingr_tabs_wrp">
 
                     <div id="ingredients_block" class="ingredients">
 
-                        <h3>Ингредиенты в выбранных продуктах</h3>
+                        <h3 id="ingr_head">У вас нет выбранных блюд, сначала необходимо <a href="/">добавить их в журнал.</a></h3>
+
+                        <h3>Ингредиенты в выбранных блюдах</h3>
 
                         <div class="ingredients_list_wrp">
                             <div class="cover">
                                 <div>
-                                    <ul id="formingIngredients" class="ingredients_list">
-                                        <li>
-                                            <div class="inner">
-                                                <span class="txt">asdfasdf</span>
-                                                <span class="count">3</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="inner">
-                                                <span class="txt">asdfasdf</span>
-                                                <span class="count">3</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="inner">
-                                                <span class="txt">asdfasdf</span>
-                                                <span class="count">3</span>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <ul id="formingIngredients" class="ingredients_list"></ul>
 
                                     <div id="export_btn_wrp">
                                         <button class="export_to">Отправить ингредиенты по sms</button>
@@ -74,15 +58,12 @@
                         </div>
 
                     </div>
-                    <div class="recipes" style="display: none">
 
-                        recipes
-
+                    <div class="recipes"><!-- recipes -->
+                        <ul id="recipe_list"></ul>
                     </div>
                 </div>
-                <ul id="recipe_list" class="task_list"><!-- Recipes list -->
 
-                </ul>
             </div>
             <div class="right">
 

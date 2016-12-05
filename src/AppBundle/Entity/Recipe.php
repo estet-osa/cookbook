@@ -56,6 +56,17 @@ class Recipe
     private $ingredient;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comments", mappedBy="recipe")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RecipeVote", mappedBy="post")
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
+     */
+    private $votes;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $is_active = true;
@@ -79,6 +90,7 @@ class Recipe
 
         return $this;
     }
+
     /**
      * Constructor
      */
@@ -225,5 +237,73 @@ class Recipe
     public function getIngredient()
     {
         return $this->ingredient;
+    }
+
+    /**
+     * Add vote
+     *
+     * @param \AppBundle\Entity\RecipeVote $vote
+     *
+     * @return Recipe
+     */
+    public function addVote(\AppBundle\Entity\RecipeVote $vote)
+    {
+        $this->votes[] = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Remove vote
+     *
+     * @param \AppBundle\Entity\RecipeVote $vote
+     */
+    public function removeVote(\AppBundle\Entity\RecipeVote $vote)
+    {
+        $this->votes->removeElement($vote);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comments $comment
+     *
+     * @return Recipe
+     */
+    public function addComment(\AppBundle\Entity\Comments $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comments $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comments $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

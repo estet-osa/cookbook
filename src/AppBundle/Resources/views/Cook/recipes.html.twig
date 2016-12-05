@@ -1,0 +1,194 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/i.css?%s') | format(random(998)) }}">
+{% endblock styles %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                <div class="profile_wrapper">
+
+                    <div class="profile">
+                        <div class="profile_inner_top">
+                            <div class="owner_photo_wrp">
+                                <img src="/uploads/d0fb3.jpeg">
+                            </div>
+                        </div>
+
+                        <div class="profile_tools_wrapper">
+                            <ul class="tools_list">
+                                <li><a href="#">инфо <span></span></a></li>
+                                <li class="active"><a href="#">рецепты <span>(1)</span></a></li>
+                                <li><a href="#">комментарии <span>(99+)</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="cmp_content_wrapper">
+
+                            <h2>Рецепты</h2>
+
+                            <ul id="recipe_list" class="task_list"><!-- Recipes list -->
+                                <li id="recipe2">
+                                    <div class="task">
+                                        <div class="inner">
+                                            <div class="tsk_img">
+                                                <a href="/show/2">
+                                                    <img src="/uploads/d0fb3.jpeg">
+                                                </a>
+                                            </div>
+                                            <div class="nav_wrapper">
+                                                <div class="task_remove">
+                                                    <div class="rmv_helper_cont">
+                                                        <div class="task_rmv_txt">удалить</div>
+                                                        <div class="hlp_triangle"></div>
+                                                    </div>
+                                                    <img src="/img/close.gif" onmouseover="task.hlp_show(this)" onmouseout="task.hlp_hide(this)" onclick="task.remove(this)">
+                                                </div>
+                                                <a href="/show/2" class="task_link">Хмм, объедение</a>
+                                            </div>
+                                            <p class="task_description">Какой то рецепт тут есть</p>
+
+                                            <div class="task_info_wrapper">
+                                                <div class="task_info_inner">
+                                                    <a href=""><abbr class="today">12,12,12</abbr></a><span class="point"></span>
+                                                    <a href="/edit/2"> Редактировать</a>
+                                                </div>
+                                                <div class="task_btns_wrapper">
+                                                    <div class="jornal_hlp">
+                                                        <div class="task_jornal_txt">Добавить в журнал</div>
+                                                        <div class="hlp_triangle"></div>
+                                                    </div>
+                                                    <div class="task_response" onmouseover="task.hlp_jornal(this)" onmouseout="task.hlp_hideJornal(this)" onclick="task.addJornal(this)">
+                                                        <div class="cover"><img src="/img/checked.gif"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="right">
+
+                sadf
+            </div>
+
+        </div>
+
+
+    </div>
+
+{% endblock body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

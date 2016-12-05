@@ -10,7 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
-use AppBundle\Entity\Ingredients;
 
 class RecipeType extends AbstractType
 {

@@ -56,6 +56,11 @@ class Recipe
     private $ingredient;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comments", mappedBy="recipe")
+     */
+    private $comments;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $is_active = true;
@@ -68,6 +73,12 @@ class Recipe
      */
     private $brochure;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RecipeVote", mappedBy="post")
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
+     */
+    private $votes;
+
     public function getBrochure()
     {
         return $this->brochure;
@@ -78,5 +89,186 @@ class Recipe
         $this->brochure = $brochure;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ingredient = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Recipe
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Recipe
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Recipe
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Recipe
+     */
+    public function setIsActive($isActive)
+    {
+        $this->is_active = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->is_active;
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \AppBundle\Entity\Ingredients $ingredient
+     *
+     * @return Recipe
+     */
+    public function addIngredient(\AppBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredient[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \AppBundle\Entity\Ingredients $ingredient
+     */
+    public function removeIngredient(\AppBundle\Entity\Ingredients $ingredient)
+    {
+        $this->ingredient->removeElement($ingredient);
+    }
+
+    /**
+     * Get ingredient
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIngredient()
+    {
+        return $this->ingredient;
+    }
+
+    /**
+     * Add vote
+     *
+     * @param \AppBundle\Entity\RecipeVote $vote
+     *
+     * @return Recipe
+     */
+    public function addVote(\AppBundle\Entity\RecipeVote $vote)
+    {
+        $this->votes[] = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Remove vote
+     *
+     * @param \AppBundle\Entity\RecipeVote $vote
+     */
+    public function removeVote(\AppBundle\Entity\RecipeVote $vote)
+    {
+        $this->votes->removeElement($vote);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 }

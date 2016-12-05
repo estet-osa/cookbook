@@ -3,7 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\RecipeVote;
+use AppBundle\Form\CommentsType;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,7 +41,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/new", name="newCookbook")
+     * @Route("/new", name="new_cookbook")
      */
     public function newAction(Request $request)
     {
@@ -66,7 +69,7 @@ class DefaultController extends Controller
             $file = $recipe->getBrochure();
 
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $fileName = substr(md5(uniqid()), 0, 5) . '.' . $file->guessExtension();
 
             // Move the file to the directory where brochures are stored
             $file->move(
@@ -92,16 +95,39 @@ class DefaultController extends Controller
     /**
      * @Route("/show/{cookbookId}", name="showCookbook")
      */
-    public function showAction($cookbookId)
+    public function showAction($cookbookId, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $recipe = $em->getRepository('AppBundle:Recipe')->find($cookbookId);
+        $em      = $this->getDoctrine()->getManager();
+        $recipe  = $em->getRepository('AppBundle:Recipe')->find($cookbookId);
+        $cmtForm = $form = $this->createForm(CommentsType::class, null, [
+            'action' => $this->generateUrl('comment_add_route'),
+        ]);
 
         if(!$recipe)
-            throw $this->createNotFoundException('No recipe found for id ' . $recipe);
+            throw $this->createNotFoundException('No recipe found for id ' . $cookbookId);
+
+        $votes = $em->getRepository('AppBundle:RecipeVote')->findBy(['post' => $cookbookId]);
+
+        //Set the client id from hash user agent & user ip
+        $clientId = substr(md5($request->headers->get('User-Agent') .
+            $request->getClientIp(true)), 0, 10);
+
+        //Try get client ip from blog_vote table
+        $issetClinetId = $em->getRepository('AppBundle:RecipeVote')->findOneBy(['client_id' => $clientId, 'post' => $cookbookId]);
+        if(!$issetClinetId){
+            $newVote = new RecipeVote();
+            $newVote->setPost($recipe);
+            $newVote->setClientId($clientId);
+
+            $em->persist($newVote);
+            $em->flush();
+        }
 
         return $this->render('AppBundle:Cookbook:show.html.twig', [
-            'recipe' => $recipe
+            'recipe'    => $recipe,
+            'clientId'  => $clientId,
+            'votes'     => $votes,
+            'cmtForm'   => $cmtForm->createView()
         ]);
     }
 
@@ -127,7 +153,7 @@ class DefaultController extends Controller
             $file = $recipe->getBrochure();
 
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $fileName = substr(md5(uniqid()), 0, 5) . '.' . $file->guessExtension();
 
             // Move the file to the directory where brochures are stored
             $file->move(
@@ -152,6 +178,7 @@ class DefaultController extends Controller
 
     /**
      * @route("/recipe/find", name="search_recipe")
+     * @Method("POST")
      */
     function findAction(Request $request)
     {
@@ -162,6 +189,38 @@ class DefaultController extends Controller
         $em  = $this->getDoctrine()->getManager();
         $sql = "SELECT id, created, title, description, brochure FROM recipe
                 WHERE title LIKE '%{$findString}%' AND is_active = 1";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('created', 'created');
+        $rsm->addScalarResult('title', 'title');
+        $rsm->addScalarResult('description', 'description');
+        $rsm->addScalarResult('brochure', 'brochure');
+        $rsm->addScalarResult('is_active', 'is_active');
+        $query = $em->createNativeQuery($sql, $rsm);
+        $recipe = $query->getResult();
+
+        if ($recipe)
+            return new JsonResponse($recipe);
+        else
+            return new Response('not_found');
+    }
+
+    /**
+     * @route("/recipes/find", name="search_recipes")
+     * @Method("POST")
+     */
+    function findListAction(Request $request)
+    {
+        $data = $request->request->get('data');
+        $json = json_decode($data);
+        $findString  = $json->searchStr;
+
+        $arrayToStr = implode(',', $findString);
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = "SELECT id, created, title, description, brochure FROM recipe
+                WHERE id IN ({$arrayToStr}) AND is_active = 1";
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('id', 'id');
@@ -199,6 +258,44 @@ class DefaultController extends Controller
      */
     function jornalAction()
     {
+
+
+
         return $this->render('AppBundle:Jornal:list.html.twig');
     }
+
+    /**
+     * @Route("/recipe/vote", name="recipe_vote")
+     * @Method("POST")
+     */
+    public function recipeVoteAction(Request $request)
+    {
+        $data = $request->request->get('data');
+
+        /** @var bool $action */
+        $action = ($data == 'like') ? 1 : 0;
+
+        //Set the client id from hash user agent & user ip
+        $clientId = substr(md5($request->headers->get('User-Agent') .
+            $request->getClientIp(true)), 0, 10);
+
+        $referer = explode('/', $request->headers->get('referer'));
+        $blogId  = $referer[4] ?? false;
+
+        $em = $this->getDoctrine()->getManager();
+        $art = $em->getRepository('AppBundle:RecipeVote')->findOneBy([
+            'client_id' => $clientId,
+            'post'      => $blogId
+        ]);
+
+        if($art){
+            $art->setUserVote($action);
+
+            $em->persist($art);
+            $em->flush();
+        }
+
+        return new Response('ok');
+    }
+
 }

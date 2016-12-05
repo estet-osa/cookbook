@@ -17,6 +17,10 @@ w.onload = function () {
     if(getId('formingIngredients'))
         task.showFormingIngredients();
 
+    // If current page jornal
+    if(location.pathname == '/jornal')
+        rcp.find();
+
 };
 
 function getId(id){
@@ -695,3 +699,65 @@ function collapseTask(elem, txt){
         txt.style.opacity = '0';
     }
 }
+
+var recipe = {
+
+    view : function(elem, curr){
+
+    },
+
+    vote : function (elem, action){
+
+        var currClassName = elem.className,
+            like          = elem.parentNode.children[0],
+            dislike       = elem.parentNode.children[1],
+            likeVal       = parseInt(like.children[1].innerHTML),
+            dislikeVal    = parseInt(dislike.children[1].innerHTML);
+
+        var params = {
+            url : '/recipe/vote',
+            data : action,
+            method : 'post'
+        };
+
+        if(currClassName != 'vote active'){
+
+            // If was a click on the button like
+            if(action == 'like'){
+
+                like.className = 'vote active';
+                like.children[1].innerHTML = likeVal + 1;
+
+                if(dislike.className == 'vote active'){
+
+                    dislike.children[1].innerHTML = dislikeVal - 1;
+                    dislike.className = 'vote';
+                }
+
+            }
+
+            // If was a click on the button dislike
+            if(action == 'dislike'){
+
+                dislike.className = 'vote active';
+                dislike.children[1].innerHTML = dislikeVal + 1;
+
+                if(like.className == 'vote active'){
+
+                    like.children[1].innerHTML = likeVal - 1;
+                    like.className = 'vote';
+                }
+            }
+
+            // Send user vote
+            $.ajax(params, function(entry){
+
+                console.log(entry)
+
+            });
+        }
+
+    }
+
+
+};

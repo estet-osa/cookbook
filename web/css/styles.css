@@ -201,6 +201,61 @@ transition: width 0.2s ease-in-out;
 }
 .search > input.srch:focus + span{width: 12px}
 
+.header_after{
+    max-width: 880px;
+    height: 20px;
+    margin: 0 auto 10px;
+    padding: 15px 0;
+}
+ul.category_list{
+
+}
+ul.category_list > li{
+    height: 25px;
+    float: left;
+    line-height: 25px;
+    margin: 0 30px 0 0;
+}
+ul.category_list > li a{
+    color: #555;
+    font-size: 15px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+ul.category_list > li span.txt{
+    display: inline-block;
+}
+ul.category_list > li span.txt:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    position: relative;
+    background: #555;
+    margin: -4px auto;
+
+-webkit-transition: width 0.08s ease-in-out;
+-moz-transition: width 0.08s ease-in-out;
+-ms-transition: width 0.08s ease-in-out;
+-o-transition: width 0.08s ease-in-out;
+transition: width 0.08s ease-in-out;
+}
+ul.category_list > li span{
+
+}
+ul.category_list > li img{
+    vertical-align: middle;
+    opacity: 0.5;
+}
+ul.category_list > li:hover a{
+    color: #000;
+}
+ul.category_list > li:hover img{
+    opacity: 0.8;
+}
+ul.category_list > li:hover span.txt:after{width: 100%}
+
 /*=== main ===*/
 .main{
     max-width: 880px;
@@ -223,20 +278,35 @@ transition: width 0.2s ease-in-out;
     width: 250px;
     overflow: hidden;
     min-height: 300px;
-    background: #F5F5F5;
+    background: #FFFBEE;
     margin: 20px 0 0 0;
 }
-.main > .left > .recipe{margin: 20px 0 0 0}
-
+.main > .left > .recipe{
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 300;
+    margin: 20px 0 0 0
+}
 .main > .left > .recipe > h1{
     font-size: 27px;
     color: #111;
 }
+.recipe_more_info{
+
+}
+.recipe_more_info > a{
+    color: #777;
+    font-size: 15px;
+    font-weight: 300;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+.recipe_more_info > a:hover{text-decoration: underline}
+
 .main > .left > .recipe h2, h3, h4{color: #444}
 
 .main > .left > .recipe p{
     margin: 15px 0;
-    font-size: 15px;
+    font-size: 16px;
     color: #777;
 }
 .main > .left > .recipe > .full_description{
@@ -251,6 +321,85 @@ transition: width 0.2s ease-in-out;
 .main > .left > .recipe > .picture_wrp img{
     width: 100%;
 }
+/*=== views recipe block ===*/
+.art_info{
+    width: 100%;
+    #min-height: 100px;
+    #background: #F7F7F7;
+    padding: 20px 0 0;
+}
+.art_info > .inner{
+    position: relative;
+    #margin: 0 15px;
+}
+.art_info > .inner:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.art_vote_wrp{
+    width: 200px;
+    height: 25px;
+    position: relative;
+    line-height: 25px;
+    float: left;
+    border: #444 solid 1px;
+}
+.art_vote_wrp:before{
+    content: '';
+    display: block;
+    width: 1px;
+    height: 25px;
+    background: #444;
+    position: absolute;
+    left: 50%;
+}
+.art_vote_wrp > .vote{
+    float: left;
+    width: 50%;
+    color: #111;
+    cursor: pointer;
+    height: 25px;
+}
+.art_vote_wrp > .vote > span{
+    width: 80px;
+    display: inline-block;
+    float: right;
+    position: relative;
+    vertical-align: middle;
+    font-size: 13px;
+    text-align: center;
+
+-moz-user-select: -moz-none;
+-o-user-select: none;
+-khtml-user-select: none;
+-webkit-user-select: none;
+user-select: none;
+}
+.art_vote_wrp > .vote:hover{
+    background: #444;
+    color: #F0F0F0;
+}
+.art_vote_wrp > .active{
+    background: #444;
+    color: #FFF;
+}
+.art_vote_wrp > .vote > .like, .art_vote_wrp > .vote > .dislike{
+    width: 15px;
+    height: 15px;
+    margin: 5px 0 0 10px;
+    position: absolute;
+    background-image: url("../img/recipe_vote.png");
+    background-repeat: no-repeat;
+}
+.art_vote_wrp > .vote > .like{background-position: right -16px}
+.art_vote_wrp > .vote > .dislike{background-position: right 0}
+
+.art_vote_wrp > .active > .like{background-position: left -16px}
+.art_vote_wrp > .active > .dislike{background-position: left 0}
+
+.art_vote_wrp > .vote:hover > .like{background-position: left -16px}
+.art_vote_wrp > .vote:hover > .dislike{background-position: left 0}
 
 /*=== recipe form ===*/
 .recipe_form{
@@ -322,7 +471,7 @@ border-radius: 4px;
     width: 0;
     height: 50px;
     position: relative;
-    background: #FFF;
+    background: #FFF9E3;
     top: 0;
     margin: -50px auto 0;
 
@@ -347,7 +496,9 @@ transition: all 0.15s ease-in-out;
     vertical-align: middle;
     padding: 0 10px;
 }
-.menu_list > li > a > span{display: inline-block}
+.menu_list > li > a > span{
+    display: inline-block;
+}
 
 .menu_list > li > a > span.jornal_cnt{
     height: 20px;
@@ -499,6 +650,7 @@ ul.ingrdt_group_nav_list > li:hover span{color: #111}
     clear: both;
 }
 .ingr_tabs_wrp > div{
+    display: none;
     width: 100%;
     min-height: 350px;
 }
@@ -552,3 +704,237 @@ ul.ingredients_list > li > .inner > span.count{
 border-radius: 3px;
 }
 .export_to:hover{background: #FFE779 url('../img/envelop.png')no-repeat 8px center}
+
+/*=== comments ===*/
+.vote_wrapper{
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.vote_wrapper > .like, .dislike{
+    width: 50%;
+    height: 25px;
+    float: left;
+    cursor: pointer;
+}
+.vote_count{
+    color: #FFF;
+    font-size: 12px;
+    float: left;
+    #width: 80px;
+    overflow: hidden;
+    margin: 5px 0 0 3px;
+    background: inherit;
+    font-weight: 600;
+    opacity: 0.8;
+}
+.vote_count:hover{opacity: 0.9;}
+
+.vote_count > span{
+    position: relative;
+    display: inline-block;
+    background: inherit;
+}
+.vote_num_down, .vote_num_up, .vote_num_active{
+    position: absolute;
+    right: 0;
+    background: inherit;
+    display: inline;
+    z-index: 10;
+
+    -webkit-transition: top 0.35s ease-in-out;
+    -moz-transition: top 0.35s ease-in-out;
+    -ms-transition: top 0.35s ease-in-out;
+    -o-transition: top 0.35s ease-in-out;
+    transition: top 0.35s ease-in-out;
+}
+.vote_num_down{top: -13px;}
+.vote_num_up{top: 13px;}
+.vote_num_active{top: 0;}
+.dislike .vote_num_down, .vote_num_up{background: inherit;}
+
+.vote_wrapper > .like > img, .dislike > img{
+    float: left;
+    opacity: 0.5;
+
+-webkit-transition: opacity 0.1s ease-in-out;
+-moz-transition: opacity 0.1s ease-in-out;
+-ms-transition: opacity 0.1s ease-in-out;
+-o-transition: opacity 0.1s ease-in-out;
+transition: opacity 0.1s ease-in-out;
+}
+.vote_wrapper > .my_vote > img{
+    opacity: 1 !important;
+}
+.vote_wrapper > .like > img{margin: 0 0 0 5px}
+.vote_wrapper > .dislike > img{margin: 2px 0 0 5px}
+
+.comments{
+    width: 100%;
+    min-height: 500px;
+    margin: 20px 0;
+    clear: both;
+}
+.comments_list{
+    clear: both;
+    margin: 10px 0 0 0;
+}
+.comments_list > li{
+    margin: 30px 0;
+}
+.comment_wrapper{
+    width: 100%;
+}
+.comment_wrapper:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.comment_bar{
+    width: 540px;
+    height: 25px;
+    float: right;
+}
+.comment_bar > .name{
+    color: #555;
+    font-size: 15px;
+    float: left;
+    margin: 5px 0 0 8px;
+    font-weight: 600;
+}
+.comment_bar > .name:hover{color: #222;}
+
+.comment_bar > .created_at{
+    float: right;
+    font-size: 12px;
+    color: #999;
+    margin: 4px 0 0 0;
+}
+.comment_wrapper > .comment{
+    width: 100%;
+    position: relative;
+    float: left;
+}
+.comment > .owner{
+    width: 60px;
+    height: 60px;
+    float: left;
+    background: #CCC;
+    margin: -21px 7px 0 0;
+}
+.comment > .owner img{
+    width: 100%;
+}
+.comment > span.txt{
+    width: 530px;
+    font-size: 15px;
+    color: #777;
+    font-weight: 300;
+    display: block;
+    float: left;
+    word-wrap: break-word;
+}
+.comment > span.txt > img.smile{
+    vertical-align: -6px;
+    margin: 0 1px;
+}
+.comment_vote_list{
+    width: 0;
+    right: -10px;
+    top: 0;
+    margin: -27px 0 0 0;
+    position: absolute;
+}
+.comment_vote_list > div{
+    width: 100px;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    left: 5px;
+}
+.comment_vote_list > div.like a{
+    margin: 0 0 0 -2px;
+    color: #BB6D9C;
+}
+.comment_vote_list > div.dislike a{
+    color: #824E6D;
+    margin: 0 0 0 3px;
+}
+.comment_vote_list > div a{
+    display: inline;
+    vertical-align: text-bottom;
+    font-size: 12px;
+    font-weight: 600;
+}
+.comment_vote_list > div a:hover{
+    text-decoration: underline;
+}
+.comment_vote_list > div img{
+    float: left;
+    vertical-align: middle;
+    opacity: 0.4;
+
+-webkit-transition: opacity 0.1s ease-in-out;
+-moz-transition: opacity 0.1s ease-in-out;
+-ms-transition: opacity 0.1s ease-in-out;
+-o-transition: opacity 0.1s ease-in-out;
+transition: opacity 0.1s ease-in-out;
+}
+.comment_vote_list > div.my_vote img{
+    opacity: 1;
+}
+.comment_vote_list .vote_count span{
+    color: #888;
+    font-weight: 600;
+    font-size: 11px;
+    background: #FFF;
+}
+
+.comment_editor_link{
+    float: right;
+    font-size: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #222;
+    margin: 5px 0 0 0;
+}
+.comment_editor_link:hover{text-decoration: none}
+
+.comment_editor{
+    width: 100%;
+    clear: both;
+    min-height: 30px;
+    background: #F0F0F0;
+    padding: 20px 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

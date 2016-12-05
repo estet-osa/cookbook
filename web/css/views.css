@@ -128,6 +128,9 @@ transition-delay:0.5s;
     width:600px;
     border-bottom:#E0E0E0 dashed 1px;
 }
+.task_default > li:last-child .task{
+    border-bottom: none;
+}
 .task_default > li{
     height:auto;
     overflow:hidden;
@@ -144,19 +147,27 @@ transition-delay:0.5s;
 .task_default > li > .task .inner > .tsk_img img{
     width:100%;
     height:100%;
+
+-webkit-transition: opacity 0.1s ease-in-out;
+-moz-transition: opacity 0.1s ease-in-out;
+-ms-transition: opacity 0.1s ease-in-out;
+-o-transition: opacity 0.1s ease-in-out;
+transition: opacity 0.1s ease-in-out;
 }
+.task_default > li > .task .inner > .tsk_img img:hover{opacity: 0.8}
+
 .task_default > li > .task > .inner > .nav_wrapper > a.task_link{
-    color:#555;
-    width:390px;
-    margin:0px 0 0 10px;
-    font-size:15px;
-    max-height:70px;
-    overflow:hidden;
-    display:block;
-    float:left;
-    font-weight:600;
+    color: #555;
+    width: 390px;
+    margin: 0 0 0 10px;
+    font-size: 16px;
+    max-height: 70px;
+    overflow: hidden;
+    display: block;
+    float: left;
+    font-weight: 600;
 }
-.task_default > li:hover .task > .inner > .nav_wrapper > a.task_link{color: #111;}
+.task_default > li .task > .inner > .nav_wrapper > a.task_link:hover{color: #111;}
 
 .task_default > li > .task > .inner > .nav_wrapper{
     width:430px;
@@ -177,8 +188,7 @@ transition-delay:0.5s;
     display:inline-block;
 }
 .task_default > li > .task > .inner > p.task_description{
-    width:390px;
-    height:38px;
+    width: 390px;
     overflow:hidden;
     float:left;
     margin:5px 0 0 10px;

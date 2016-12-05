@@ -1,0 +1,193 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/i.css?%s') | format(random(998)) }}">
+{% endblock styles %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                <div class="profile_wrapper">
+
+                    <div class="profile">
+                        <div class="profile_inner_top">
+                            <div class="owner_photo_wrp">
+                                <img src="/uploads/d0fb3.jpeg">
+                            </div>
+                        </div>
+
+                        <div class="profile_tools_wrapper">
+                            <ul class="tools_list">
+                                <li class="active"><a href="#">инфо <span></span></a></li>
+                                <li><a href="#">рецепты <span>(1)</span></a></li>
+                                <li><a href="#">комментарии <span>(99+)</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="profile_content_wrapper">
+                            <div class="inner">
+
+                                {{ form_start(form) }}
+                                {#{{ form_widget(form) }}#}
+
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.first_name, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.first_name, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.last_name, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.last_name, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.family, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.family, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.patronymic, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.patronymic, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.birthday, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.birthday, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.sex, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.sex, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.marital_status, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.marital_status, { 'label' : false }) }}
+                                    </div>
+                                    <div class="tool_wrp">
+                                        {{ form_label(form.about, null, {'label_attr': {'class': 'key'}}) }}
+                                        {{ form_row(form.about, { 'label' : false }) }}
+                                    </div>
+
+                                {{ form_end(form) }}
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="right">
+
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+{% endblock body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
