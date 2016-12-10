@@ -20,7 +20,7 @@ class CookController extends Controller
      */
     public function showAction($cookId, Request $request)
     {
-        $currUser = $this->getUser()->getId();
+        echo $currUser = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Cook')->find($currUser);
 

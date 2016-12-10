@@ -20,28 +20,32 @@
 
                     {{ form_start(form) }}
 
+                        <div>
                         {{ form_row(form.title, {
                             'label'     : 'Название блюда',
                             'required'  : true,
                             'attr'      : { 'placeholder' : 'Название блюда', 'class' : 'recipe_inpt' }
                         }) }}
-
+                        </div>
+                        <div>
                         {{ form_row(form.description, {
                             'label'     : 'Описание блюда',
                             'required'  : true,
                             'attr'      : { 'placeholder' : 'Подробное описание, рецепт', 'class' : 'recipe_area' }
                         }) }}
-
+                        </div>
+                        <div>
                         {{ form_row(form.brochure, {
                             'label'     : 'Добавьте картинку',
                             'required'  : true,
                         }) }}
-
+                        </div>
+                        <div>
                         {{ form_row(form.save, {
                             'label'     : 'Сохранить',
                             'attr'      : { 'class' : 'save_btn' }
                         }) }}
-
+                        </div>
                     {{ form_end(form) }}
 
                 </div>

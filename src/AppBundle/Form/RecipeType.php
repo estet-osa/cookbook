@@ -28,6 +28,7 @@ class RecipeType extends AbstractType
                 'label'=> 'Описание блюда',
                 'required'  => true,
                 'config' => array(
+                    'stylesSet' => 'my_styles',
                     'uiColor' => '#ffffff',
                 ),
             ))

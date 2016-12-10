@@ -1,0 +1,154 @@
+
+
+ul.filter_list{
+
+}
+ul.filter_list > li{
+    #padding: 20px 0;
+}
+ul.filter_list > li:hover{
+    background: #FFF9DD;
+}
+
+.filter_wrp{
+    height: 50px;
+    border-bottom: #FFF solid 1px;
+}
+.filter_wrp > span.brd{
+    width: 3px;
+    height: 0;
+    background: #FFBD33;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 50px;
+    text-align: left;
+
+-webkit-transition: height 0.15s ease-in-out;
+-moz-transition: height 0.15s ease-in-out;
+-ms-transition: height 0.15s ease-in-out;
+-o-transition: height 0.15s ease-in-out;
+transition: height 0.15s ease-in-out;
+}
+.filter_wrp label.filter{
+    height: 50px;
+    width: 90%;
+    color: #444;
+    line-height: 50px;
+    margin: 0 0 0 10px;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+}
+.filter_wrp label.filter > input[type='checkbox']{display: none}
+
+.filter_wrp label.filter > span.box_wrapper{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    border: #444 solid 2px;
+    opacity: 0.7;
+
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+.filter_wrp label.filter span.key{
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 14px;
+    color: #555;
+}
+.filter_wrp label.filter span.cover{
+    width: 0;
+    position: absolute;
+    height: 13px;
+    margin: 0 0 0 2px;
+    display: inline-block;
+    line-height: 12px;
+    overflow: hidden;
+
+-webkit-transition: width 0.1s ease-in-out;
+-moz-transition: width 0.1s ease-in-out;
+-ms-transition: width 0.1s ease-in-out;
+-o-transition: width 0.1s ease-in-out;
+transition: width 0.1s ease-in-out;
+}
+.filter_wrp label.filter span.cover > img{
+    vertical-align: middle;
+}
+.filter_wrp label.filter > input[type='checkbox']:checked + span.box_wrapper > span.cover{width: 11px}
+.filter_wrp label.filter:hover span.box_wrapper{opacity: 0.8}
+.filter_wrp label.filter > input[type='checkbox']:checked + span.box_wrapper{opacity: 1}
+.filter_wrp:hover > span.brd{height: 50px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

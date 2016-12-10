@@ -1,5 +1,9 @@
 {% extends 'AppBundle:Main:base.html.twig' %}
 
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/recipe-show.css?%s') | format(random(998)) }}">
+{% endblock styles %}
+
 {% block body %}
 
     <div class="all">
@@ -9,6 +13,15 @@
 
         <div class="main">
 
+            <div class="navigate_toolbar">
+                <ul class="navigate_list">
+                    <li  class="active"><a href="#recipeStart">В начало</a><span></span></li>
+                    <li><a href="#recipeHead">Рецепт</a><span></span></li>
+                    <li><a href="#ingredientsHead">Ингредиенты</a><span></span></li>
+                    <li><a href="#comments">Комментарииa</a><span></span></li>
+                </ul>
+            </div>
+
             <div class="left">
 
                 {% for cmtItem in recipe.comments %}
@@ -17,11 +30,12 @@
 
                 {% if recipe is defined %}
 
-                    <div class="recipe">
+                    <div id="recipeStart" class="recipe">
                         <h1>{{ recipe.title }}</h1>
                         <div class="recipe_more_info">
                             <a href="#">просмотров за все время: {{ votes | length }}</a>
                             <a href="#comments">комментариев: {{ votes | length }}</a>
+                            <a href="/edit/{{ recipe.id }}">Редактировать рецепт</a>
                         </div>
 
                         {% if recipe.brochure %}
@@ -30,12 +44,28 @@
                             </div>
                         {% endif %}
 
-                        <h2>Рецепт приготовления</h2>
+                        <h2 id="recipeHead">Рецепт приготовления</h2>
                         <p class="full_description">{{ recipe.description | raw }}</p>
+
+                        <div class="tabs"><!-- tabs -->
+                            <ul class="tabs_list">
+                                <li class="active">
+                                    <div class="inner">
+                                        <span>Ингредиенты</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="inner">
+                                        <span>Пищевая ценность</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
                         {%  if recipe.ingredient|length > 0 %}
 
-                            <br><h2>Ингредиенты</h2>
+                            <br>
+                            <h2 id="ingredientsHead">Ингредиенты</h2>
 
                             <ul id="ingredientList" class="ingredients_list">
 
@@ -50,9 +80,6 @@
                             <br>
                         {% endif %}
 
-                        <div class="recipe_more_links">
-                            <a href="/edit/{{ recipe.id }}">Редактировать рецепт</a>
-                        </div>
                     </div>
 
                 {% endif %}
@@ -107,21 +134,25 @@
                             </div>
                         </div>
 
-                        <div class="comment_editor_link">
-                            <span>Добавить комментарий</span>
+                        <div class="comment_editor_link" onclick="rcp.editorShow()">
+                            <span>Комментировать</span>
                         </div>
 
-                        <div class="comment_editor">
-                            <div class="comment_owner">
-                                <img src="">
-                            </div>
-                            <div class="comment_field">
-
+                        <div id="comment_editor" class="comment_editor">
+                            <div class="inner">
                                 {{ form_start(cmtForm) }}
 
-                                    {{ form_widget(cmtForm) }}
+                                <div class="comment_field">
+
+                                    {{ form_row(cmtForm.description) }}
+
+                                </div>
+                                <div class="save_wrp">
+                                    {{ form_row(cmtForm.save) }}
+                                </div>
 
                                 {{ form_end(cmtForm) }}
+
                             </div>
                         </div>
                     </div>
@@ -129,33 +160,36 @@
 
                 <div id="comments" class="comments"><!-- comments -->
 
-
-                    <ul class="comments_list">
+                    <ul id="commentsList" class="comments_list">
                         <li>
-                            <div class="comment_wrapper">
-                                <div class="comment_bar">
-                                    <a href="/" target="_blank" class="name">Филипенко клавдия</a>
-                                    <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
-                                </div>
-                                <div class="comment">
-                                    <div class="owner">
-                                        <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
-                                    </div>
+                            <div class="cover">
+                                <div>
+                                    <div class="comment_wrapper">
+                                        <div class="comment_bar">
+                                            <a href="/" target="_blank" class="name">Филипенко клавдия</a>
+                                            <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
+                                        </div>
+                                        <div class="comment">
+                                            <div class="owner">
+                                                <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
+                                            </div>
 
-                                    <div class="comment_vote_list">
-                                        <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
-                                            <img src="/img/comment_like.png">
-                                            <div class="vote_count"><span style="width: 20px;">99</span></div>
-                                        </div>
-                                        <div class="dislike my_vote" onclick="return Cmt.vote('11_2', 'dislike', this)">
-                                            <img src="/img/comment_dislike.png">
-                                            <div class="vote_count"><span style="width: 20px;">100</span></div>
-                                        </div>
-                                    </div>
+                                            <div class="comment_vote_list">
+                                                <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
+                                                    <img src="/img/comment_like.png">
+                                                    <div class="vote_count"><span style="width: 20px;">99</span></div>
+                                                </div>
+                                                <div class="dislike my_vote" onclick="return Cmt.vote('11_2', 'dislike', this)">
+                                                    <img src="/img/comment_dislike.png">
+                                                    <div class="vote_count"><span style="width: 20px;">100</span></div>
+                                                </div>
+                                            </div>
 
                                    <span class="txt">
                                        тут какой  то комментарий
                                    </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -245,9 +279,74 @@
                         </li>
                     </ul>
 
+                </div>
+
+                <div class="more_recipes">
+
+                    <h2>Другие интересные рецепты</h2>
+
+                    <ul class="more_recipes_list">
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inner">
+                                <div class="picture_wrp">
+                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
+                                </div>
+                                <div class="created_at">24.12.11 в 14:02</div>
+                                <a href="">Какой то заголовок, какого то блюдаКакой то заголовок, какого то блюда</a>
+                            </div>
+                        </li>
+
+                    </ul>
 
 
                 </div>
+
+
             </div>
             <div class="right">
 
@@ -270,6 +369,8 @@
             </div>
 
         </div>
+
+        {% include('AppBundle:Templates:footer.html.twig') %}
 
     </div>
 

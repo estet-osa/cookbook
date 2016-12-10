@@ -14,11 +14,17 @@ class CommentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'label' => false,
+                'attr'  => array(
+                    'placeholder' => 'Скажите, что бы вам было хорошо.'
+                )
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Сохранить',
                 'attr'  => array(
-                    'class' => 'save_btn'
+                    'class' => 'save_btn',
+                    'onclick' => 'return rcp.addComment(this)'
                 )
             ])
         ;

@@ -54,4 +54,10 @@ captcha_routing:
 comment_add_route:
     path: '/comment/add'
 
+my_route:
+    path: '/uploads'
+
+upload_recipe_img:
+    path: /recipe/upload
+
 

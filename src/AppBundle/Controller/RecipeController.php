@@ -3,26 +3,24 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SearchController
+ * Class RecipeController
  * @package AppBundle\Controller
  */
-class SearchController extends Controller
+class RecipeController extends Controller
 {
     /**
-     * @Route("/search/{findStr}", name="search")
+     * @Route("/recipe/upload", name="recipe_upload")
      */
-    public function newAction($findStr, Request $request)
+    public function newAction(Request $request)
     {
 
 
-
-        return $this->render('AppBundle:Search:list.html.twig', [
-
-        ]);
+        return new Response('хмм, мы тут');
     }
 }

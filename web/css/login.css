@@ -1,0 +1,495 @@
+/*=== include fonts ===*/
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Thin'), local('Roboto-Thin'), url('../img/fonts/roboto/Robotothin.woff2') format('woff2'), url('../img/fonts/roboto/Robotothin.woff') format('woff'), url('../img/fonts/roboto/Robotothin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'), url('../img/fonts/roboto/Robotothinitalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotothinitalic.woff') format('woff'), url('../img/fonts/roboto/Robotothinitalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Light'), local('Roboto-Light'), url('../img/fonts/roboto/Robotolight.woff2') format('woff2'), url('../img/fonts/roboto/Robotolight.woff') format('woff'), url('../img/fonts/roboto/Robotolight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url('../img/fonts/roboto/Robotolightitalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotolightitalic.woff') format('woff'), url('../img/fonts/roboto/Robotolightitalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), local('Roboto-Regular'), url('../img/fonts/roboto/Roboto.woff2') format('woff2'), url('../img/fonts/roboto/Roboto.woff') format('woff'), url('../img/fonts/roboto/Roboto.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Italic'), local('Roboto-Italic'), url('../img/fonts/roboto/Robotoitalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotoitalic.woff') format('woff'), url('../img/fonts/roboto/Robotoitalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Medium'), local('Roboto-Medium'), url('../img/fonts/roboto/Robotomedium.woff2') format('woff2'), url('../img/fonts/roboto/Robotomedium.woff') format('woff'), url('../img/fonts/roboto/Robotomedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'), url('../img/fonts/roboto/Robotomediumitalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotomediumitalic.woff') format('woff'), url('../img/fonts/roboto/Robotomediumitalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Bold'), local('Roboto-Bold'), url('../img/fonts/roboto/Robotobold.woff2') format('woff2'), url('../img/fonts/roboto/Robotobold.woff') format('woff'), url('../img/fonts/roboto/Robotobold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url('../img/fonts/roboto/Robotobolditalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotobolditalic.woff') format('woff'), url('../img/fonts/roboto/Robotobolditalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Black'), local('Roboto-Black'), url('../img/fonts/roboto/Robotoblack.woff2') format('woff2'), url('../img/fonts/roboto/Robotoblack.woff') format('woff'), url('../img/fonts/roboto/Robotoblack.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url('../img/fonts/roboto/Robotoblackitalic.woff2') format('woff2'), url('../img/fonts/roboto/Robotoblackitalic.woff') format('woff'), url('../img/fonts/roboto/Robotoblackitalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+body{
+    font-family: Roboto, Tahoma, sans-serif;
+    overflow-y: scroll;
+}
+
+/*=== authorization form ===*/
+.login_wrp{
+    width: 100%;
+    min-height: 100%;
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 300;
+    background: #FFBD33;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    /*background: -webkit-linear-gradient(303deg, #FFBD33, #FB888B);*/
+    /*background: -o-linear-gradient(303deg, #FFBD33, #FB888B);*/
+    /*background: -moz-linear-gradient(303deg, #FFBD33, #FB888B);*/
+    /*background: linear-gradient(303deg, #FFBD33, #FB888B);*/
+    /*background-size: 400% 400%;*/
+
+    /*-webkit-animation: GradientAnimation 8s ease infinite;*/
+    /*-o-animation: GradientAnimation 8s ease infinite;*/
+    /*-moz-animation: GradientAnimation 8s ease infinite;*/
+    /*animation: GradientAnimation 8s ease infinite;*/
+}
+@-webkit-keyframes GradientAnimation {
+    0%{background-position:0% 47%}
+    50%{background-position:100% 54%}
+    100%{background-position:0% 47%}
+}
+@-o-keyframes GradientAnimation {
+    0%{background-position:0% 47%}
+    50%{background-position:100% 54%}
+    100%{background-position:0% 47%}
+}
+@-moz-keyframes GradientAnimation {
+    0%{background-position:0% 47%}
+    50%{background-position:100% 54%}
+    100%{background-position:0% 47%}
+}
+@keyframes GradientAnimation {
+    0%{background-position:0% 47%}
+    50%{background-position:100% 54%}
+    100%{background-position:0% 47%}
+}
+
+::-webkit-input-placeholder {color: #555}
+::-moz-placeholder          {color: #555}
+:-moz-placeholder           {color: #555}
+:-ms-input-placeholder      {color: #555}
+
+.login_wrp .login_intro{
+    width: 100%;
+    height: 30px;
+    margin: 0 0 20px 0;
+    position: relative;
+    text-align: right;
+    line-height: 30px;
+}
+.login_wrp .login_intro > span{
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 600;
+    color: #444;
+}
+.login_wrp .login_intro > span:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: linear-gradient(to right, transparent, #FFBD33);
+    width: 40px;
+    height: 100%;
+    right: 0;
+    top: 0;
+}
+.login_wrp > .inner{
+    max-width: 330px;
+    min-height: 250px;
+    margin: 150px auto;
+}
+.login_wrp .field_wrp{
+    min-height: 55px;
+    padding: 2px 0;
+    margin: 10px 0;
+    position: relative;
+    border-bottom: #E3A72E solid 1px;
+}
+.login_wrp .field_wrp label.required{
+    font-size: 13px;
+    color: #555;
+}
+.login_wrp .field_wrp input{
+    width: 94%;
+    height: 22px;
+    padding: 5px 0 10px 3%;
+    border: none;
+    outline: none;
+    color: #333;
+    font-size: 22px;
+    background: transparent;
+}
+.login_wrp .field_wrp .line{
+    width: 0;
+    height: 1px;
+    position: relative;
+    background: #B28324;
+    margin: 0 auto;
+    bottom: -3px;
+
+-webkit-transition: width 0.15s ease-in-out;
+-moz-transition: width 0.15s ease-in-out;
+-ms-transition: width 0.15s ease-in-out;
+-o-transition: width 0.15s ease-in-out;
+transition: width 0.15s ease-in-out;
+}
+.login_wrp .field_wrp input:focus + .line{width: 100%}
+
+.login_wrp .field_wrp > .view_password{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2px;
+    top: 26px;
+    cursor: pointer;
+}
+.login_wrp .field_wrp > .view_password:hover{
+
+}
+.login_wrp .field_wrp > .view_password > .point{
+    width: 16px;
+    height: 16px;
+    position: relative;
+    border: transparent solid 2px;
+    opacity: 0.5;
+
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+
+-webkit-transition: all 0.15s ease-in-out;
+-moz-transition: all 0.15s ease-in-out;
+-ms-transition: all 0.15s ease-in-out;
+-o-transition: all 0.15s ease-in-out;
+transition: all 0.15s ease-in-out;
+}
+.login_wrp .field_wrp > .view_password > .point:hover{
+    border: #444 solid 2px;
+}
+.login_wrp .field_wrp > .view_password > .point:before{
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: #444;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+}
+.login_wrp .field_wrp > .show_password > .point{
+    opacity: 1;
+    border: #444 solid 2px;
+}
+.login_wrp .field_wrp ul{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    top: 3px;
+    position: absolute;
+}
+.login_wrp .field_wrp ul > li{
+    list-style: none;
+    width: 100%;
+    text-align: right;
+    color: #5F3951;
+    font-size: 14px;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: inset  0 0 0 0 #333, /* Внутренняя тень */
+    inset 0 0 0 50px #FFBD33, /* Цвет фона */
+    0 1px #FFBD33 !important; /* Наружная тень */
+    -webkit-text-fill-color: #333 !important;
+}
+.login_wrp .more_links{
+    margin: 15px 0 0;
+    padding: 7px;
+    border: transparent solid 2px;
+    font-size: 15px;
+    color: #5F3951;
+
+    -webkit-transition: border 0.2s ease-in-out;
+    -moz-transition: border 0.2s ease-in-out;
+    -ms-transition: border 0.2s ease-in-out;
+    -o-transition: border 0.2s ease-in-out;
+    transition: border 0.2s ease-in-out;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.login_wrp .more_links:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.login_wrp .more_links > .forgot_link_wrp{float: left}
+.login_wrp .more_links > .register_link_wrp{float: right}
+
+.login_wrp .more_links > .forgot_link_wrp > a.forgot_pass{
+    color: #444;
+    text-decoration: none;
+}
+.login_wrp .more_links > .register_link_wrp > a.register_link{
+    color: #444;
+    text-decoration: none;
+}
+.login_wrp .more_links a.forgot_pass:hover{text-decoration: underline}
+.login_wrp .more_links a.register_link:hover{text-decoration: underline}
+
+.login_wrp .other_link_wrp{
+    font-size: 15px;
+}
+.login_wrp .other_link_wrp > a{
+    color: #444;
+    text-decoration: none;
+}
+.login_wrp .other_link_wrp > a:hover{text-decoration: underline}
+
+.login_wrp label.checkbox{
+    height: 18px;
+    color: #444;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 15px;
+}
+.login_wrp label.checkbox:hover{color: #111}
+
+.login_wrp label.checkbox > input[type='checkbox']{display: none}
+
+.login_wrp label.checkbox span.box_wrapper{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    margin: 0 2px 0 0;
+    cursor: pointer;
+    border: #444 solid 2px;
+    opacity: 0.5;
+
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+.login_wrp label.checkbox span.cover{
+    width: 0;
+    height: 13px;
+    margin: 0 0 0 2px;
+    display: inline-block;
+    line-height: 12px;
+    overflow: hidden;
+
+-webkit-transition: width 0.1s ease-in-out;
+-moz-transition: width 0.1s ease-in-out;
+-ms-transition: width 0.1s ease-in-out;
+-o-transition: width 0.1s ease-in-out;
+transition: width 0.1s ease-in-out;
+}
+.login_wrp label.checkbox span.cover > img{
+    vertical-align: middle;
+}
+.login_wrp .field_wrp .line{
+    cursor: pointer;
+    color: #444;
+    font-size: 14px;
+    vertical-align: middle;
+
+-ms-user-select: none;
+-moz-user-select: none;
+-khtml-user-select: none;
+-webkit-user-select: none;
+}
+.login_wrp label.checkbox > input[type='checkbox']:checked + span.box_wrapper > span.cover{width: 11px}
+.login_wrp label.checkbox:hover span.box_wrapper{opacity: 0.8}
+.login_wrp label.checkbox > input[type='checkbox']:checked + span.box_wrapper{opacity: 1}
+
+.login_wrp label.checkbox span.terms_of_use{
+    color: #000;
+}
+.login_wrp label.checkbox span.terms_of_use:hover{
+    text-decoration: underline;
+}
+/*=== login button ===*/
+.login_wrp .login_btn{
+    width: 100%;
+    height: 45px;
+    display: block;
+    margin: 25px 0 20px;
+    background: rgba(0, 0, 0, .1);
+    border: #555 solid 1px;
+    color: #444;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+
+-webkit-transition: all 0.1s ease-in-out;
+-moz-transition: all 0.1s ease-in-out;
+-ms-transition: all 0.1s ease-in-out;
+-o-transition: all 0.1s ease-in-out;
+transition: all 0.1s ease-in-out;
+
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+.login_wrp .login_btn:hover{
+    background: rgba(0, 0, 0, .3);
+    color: #FFF7CD;
+}
+.login_wrp .login_btn:active{
+    background: rgba(0, 0, 0, .5);
+    color: #FFF;
+}
+
+/*=== login footer ===*/
+.login_wrp > .login_footer{
+    width: 100%;
+    position: absolute;
+    bottom: 25px;
+    text-align: center;
+}
+.login_wrp > .login_footer > span.copyright{
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    color: #444;
+}
+.login_wrp > .login_footer > span.copyright:after{
+    content: '';
+    height: 15px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    background: linear-gradient(to bottom, transparent, #FFBD33);
+}
+.login_wrp .login_check_wrp{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 5px;
+    top: 25px;
+    opacity: 0.7;
+}
+.login_wrp .login_check_wrp > .cover{
+    width: 0;
+    overflow: hidden;
+
+    -webkit-transition: width 0.25s ease-in-out;
+    -moz-transition: width 0.25s ease-in-out;
+    -ms-transition: width 0.25s ease-in-out;
+    -o-transition: width 0.25s ease-in-out;
+    transition: width 0.25s ease-in-out;
+}
+.login_wrp .login_check_wrp > .cover img{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

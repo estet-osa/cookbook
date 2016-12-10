@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Comments;
 use AppBundle\Form\CommentsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,6 +19,7 @@ class CommentsController extends Controller
 {
     /**
      * @Route("/comment/add", name="comment_add")
+     * @Method("POST")
      */
     public function newAction(Request $request)
     {
@@ -35,20 +38,25 @@ class CommentsController extends Controller
         else{
 
             if(!$form->isSubmitted() && !$form->isValid())
-                return new Response('error');
+                return new Response('error form');
             else{
 
                 // Get data from form
                 $data = $form->getData();
 
                 $text = $data->getDescription();
-                $comment->setDescription($text);
-                $comment->setRecipe($recipe);
 
-                $em->persist($comment);
-                $em->flush();
+                if(strlen($text) >= 5){
+                    $comment->setDescription($text);
+                    $comment->setRecipe($recipe);
 
-                return new Response('ok');
+                    $em->persist($comment);
+                    $em->flush();
+
+                    return new Response('comment ok');
+
+                }else
+                    return new JsonResponse(['error' => 'length']);
             }
         }
     }

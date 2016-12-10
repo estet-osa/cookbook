@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: 'ru'
     images_directory: '%kernel.root_dir%/../web/uploads'
 
 framework:
@@ -112,3 +112,18 @@ sonata_admin:
     title:      Cookbook
     templates:
         layout: AppBundle:Admin:sonata.admin.base.layout.html.twig
+
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            toolbar: "my_toolbar_1"
+            uiColor: "#ffffff"
+            filebrowserBrowseRoute:           "my_route"
+            filebrowserBrowseRouteParameters: { slug: "my-slug" }
+            filebrowserBrowseRouteAbsolute:   true
+            filebrowserImageUploadUrl: "upload_recipe_img"
+    toolbars:
+        configs:
+            my_toolbar_1: [ [ "Source", "-", "Save", "Image", "HorizontalRule" ],  [ "Anchor" ], "/", [ "Maximize" ] ]
+

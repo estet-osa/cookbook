@@ -51,7 +51,10 @@ class DefaultController extends Controller
             ->add('title', TextType::class)
             ->add('description', CKEditorType::class, array(
                 'config' => array(
-                    'uiColor' => '#FFFFFF',
+                    'filebrowserBrowseRoute'           => 'my_route',
+                    'filebrowserBrowseRouteParameters' => array('slug' => 'my-slug'),
+                    'filebrowserBrowseRouteAbsolute'   => true,
+                    'filebrowserImageUploadUrl' => "upload_recipe_img",
                 ),
             ))
             ->add('brochure', FileType::class)

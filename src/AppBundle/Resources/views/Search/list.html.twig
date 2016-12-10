@@ -1,0 +1,69 @@
+{% extends 'AppBundle:Main:base.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/search.css?%s') | format(random(998)) }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="all">
+
+        {% include('AppBundle:Templates:header.html.twig') %}
+
+        <div class="main">
+
+            <div class="left">
+
+                asdfasdf
+
+            </div>
+            <div class="right">
+
+                <ul class="filter_list">
+                    <li>
+                        <div class="filter_wrp">
+                            <span class="brd"></span>
+                            <label for="only_video" class="filter">
+                                <input type="checkbox" id="only_video" name="only_video">
+                                <span class="box_wrapper">
+                                    <span class="cover"><img src="/img/dark_checkbox.gif"></span>
+                                </span>
+                                <span class="key">Только с видео</span>
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="filter_wrp">
+                            <span class="brd"></span>
+                            <label for="diet" class="filter">
+                                <input type="checkbox" id="diet" name="diet">
+                                <span class="box_wrapper">
+                                    <span class="cover"><img src="/img/dark_checkbox.gif"></span>
+                                </span>
+                                <span class="key">Диетические блюда</span>
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="filter_wrp">
+                            <span class="brd"></span>
+                            <label for="and_text" class="filter">
+                                <input type="checkbox" id="and_text" name="and_text">
+                                <span class="box_wrapper">
+                                    <span class="cover"><img src="/img/dark_checkbox.gif"></span>
+                                </span>
+                                <span class="key">Искать в заголовках и тексте</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        {% include('AppBundle:Templates:footer.html.twig') %}
+
+    </div>
+
+{% endblock body %}

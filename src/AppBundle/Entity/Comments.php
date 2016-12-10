@@ -25,7 +25,13 @@ class Comments
     protected $recipe;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     *  @Assert\Length(
+     *      min = 20,
+     *      max = 20000,
+     *      minMessage = "Минимальное колличество символов описания, должно быть больше чем {{ limit }}.",
+     *      maxMessage = "Максимальное колличество символов для описания не должно превышать {{ limit }}."
+     * )
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $description;
 

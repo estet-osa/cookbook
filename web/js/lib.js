@@ -507,15 +507,20 @@ var $ = {
     ajax : function(params, handler){
 
         var xhr     = (typeof(XMLHttpRequest) == 'undefined') ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest(),
-            request = 'data='+ params.data,
+            request = (!params.formData) ? 'data='+ params.data : params.formData,
             method  = (params.method) ? params.method : 'get';
 
         if(params.url){
 
             xhr.open(method, params.url, true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.send(request);
 
+            if(!params.formData){
+
+                // If sender not form
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            }
+
+            xhr.send(request);
             xhr.onreadystatechange = function(){
                 if(xhr.readyState == 4){
 
