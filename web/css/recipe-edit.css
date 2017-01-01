@@ -1,0 +1,257 @@
+/*=== modal ===*/
+.ingr_modal_wrp{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    z-index: 100;
+    display: block;
+    background: rgba(0, 0, 0, 0.7);
+}
+.ingr_modal{
+    width: 500px;
+    min-height: 350px;
+    position: relative;
+    z-index: 100;
+    background: #FFFBEE;
+    top: 100px;
+    margin: 50px auto 100px;
+}
+.ingr_modal input::-webkit-input-placeholder {color: #777}
+.ingr_modal input::-moz-placeholder          {color: #777}
+.ingr_modal input:-moz-placeholder           {color: #777}
+.ingr_modal input:-ms-input-placeholder      {color: #777}
+
+.ingr_modal > .head{
+    width: 100%;
+    height: 50px;
+    margin: 0 0 20px 0;
+    background: #FFF;
+    border-bottom: #F8E4BC solid 1px;
+}
+.ingr_modal > .head > .close_btn{
+    width: 30px;
+    height: 30px;
+    margin: 10px 10px;
+    text-align: center;
+    float: right;
+    line-height: 35px;
+    cursor: pointer;
+}
+.ingr_modal > .head > .close_btn:hover{background: #FAEBCF}
+
+.ingr_modal > .head > .text{
+    margin: 17px 0 0 20px;
+    color: #333;
+    font-size: 15px;
+    float: left;
+}
+.field_section_wrap{
+    width: 85%;
+    position: relative;
+    min-height: 40px;
+    margin: 10px auto;
+}
+.field_section_wrap > input[type='text']{
+    width: 92%;
+    display: block;
+    height: 23px;
+    font-size: 14px;
+    padding: 8px 25px 8px 6px;
+    float: left;
+    outline: none;
+    border: #F8E4BC solid 1px;
+}
+.field_section_wrap > button#pricegen_value_btn {
+    width: 25px;
+    height: 25px;
+    padding: 8px 0 0 0;
+    display: block;
+    position: absolute;
+    right: 0;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 7px 10px 7px 0;
+    background-color: #FAEBCF;
+    background-image: url("../img/entr.png");
+    background-repeat: no-repeat;
+    background-position: center;
+
+-webkit-transition: all 0.2s ease-in-out;
+-moz-transition: all 0.2s ease-in-out;
+-ms-transition: all 0.2s ease-in-out;
+-o-transition: all 0.2s ease-in-out;
+transition: all 0.2s ease-in-out;
+}
+.modal_footer_wrp{
+    width: 100%;
+    padding: 15px 0;
+    background: #FFF;
+    border-top: #F8E4BC solid 1px;
+    margin: 30px 0 0 0;
+}
+.added_ingredients_list_wrapper{
+    width: 85%;
+    margin: 0 auto 35px;
+    padding: 25px 0 0 0;
+}
+.added_ingredients_list_wrapper > .title{
+    border-top: 1px solid #F8E4BC;
+    color: #555;
+    font-size: 13px;
+    margin: 10px 0 0;
+    text-align: center;
+}
+.added_ingredients_list_wrapper > .title > abbr{
+    font-size: 13px;
+    background-color: #FFFBEE;
+    padding: 0 5px;
+    position: relative;
+    top: -9px;
+}
+
+.modal_value_list{
+    margin: 10px 0 0 0;
+}
+.modal_value_list > li{
+    width: auto;
+    list-style-type: none;
+    margin: 3px 2px 3px 2px;
+    color: #444;
+    font-size: 14px;
+    background: #F1D9A9;
+    display: block;
+    cursor: pointer;
+}
+.modal_value_list li:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.modal_value_list > li:hover{
+    background: #EDCE90;
+}
+.modal_value_list > li:hover > div.del{
+    opacity: 0.8;
+}
+.modal_value_list > li > div.item{
+    display: inline-block;
+    line-height: 35px;
+    font-size: 13px;
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+    margin: 0 10px;
+
+white-space: nowrap;
+word-wrap: normal;
+}
+.modal_value_list > li > div.item:after{
+    content: '';
+    width: 25px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    position: absolute;
+    background: linear-gradient(to right, transparent, #F1D9A9);
+}
+.modal_value_list > li > .item:nth-child(1){width: 55%}
+.modal_value_list > li > .item:nth-child(2){width: 25%}
+.modal_value_list > li:hover > .item:after{background: linear-gradient(to right, transparent, #EDCE90)}
+
+.modal_value_list li > div.del{
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    float: right;
+    line-height: 37px;
+    vertical-align: middle;
+    opacity: 0.5;
+
+-webkit-transition: all 0.15s ease-in-out;
+-moz-transition: all 0.15s ease-in-out;
+-ms-transition: all 0.15s ease-in-out;
+-o-transition: all 0.15s ease-in-out;
+transition: all 0.15s ease-in-out;
+}
+.modal_value_list li > div.del:hover{opacity: 1}
+
+.modal_footer_wrp > .inner{
+    width: 85%;
+    margin: 0 auto;
+}
+button.save_ingredient_btn{
+    width: 100px;
+    height: 37px;
+    background: #EDCE90;
+    border: none;
+    color: #444;
+    outline: none;
+    cursor: pointer;
+    margin: 0 20px 0 0;
+    border-bottom: #D0B173 solid 2px;
+}
+button.save_ingredient_btn:hover{background: #F1D9A9}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

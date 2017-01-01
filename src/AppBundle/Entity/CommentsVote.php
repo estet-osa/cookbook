@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="recipe_votes")
+ * @ORM\Table(name="comment_votes")
  */
-class RecipeVote
+class CommentsVote
 {
     /**
      * @ORM\Column(type="integer")
@@ -19,10 +19,10 @@ class RecipeVote
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="votes")
-     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Comments", inversedBy="votes")
+     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id")
      */
-    protected $post;
+    protected $entry;
 
     /**
      * @ORM\Column(type="string", columnDefinition="CHAR(2) NULL")
@@ -49,7 +49,7 @@ class RecipeVote
      *
      * @param string $userVote
      *
-     * @return RecipeVote
+     * @return CommentsVote
      */
     public function setUserVote($userVote)
     {
@@ -73,7 +73,7 @@ class RecipeVote
      *
      * @param string $clientId
      *
-     * @return RecipeVote
+     * @return CommentsVote
      */
     public function setClientId($clientId)
     {
@@ -93,26 +93,26 @@ class RecipeVote
     }
 
     /**
-     * Set post
+     * Set entry
      *
-     * @param \AppBundle\Entity\Recipe $post
+     * @param \AppBundle\Entity\Comments $entry
      *
-     * @return RecipeVote
+     * @return CommentsVote
      */
-    public function setPost(\AppBundle\Entity\Recipe $post = null)
+    public function setEntry(\AppBundle\Entity\Comments $entry = null)
     {
-        $this->post = $post;
+        $this->entry = $entry;
 
         return $this;
     }
 
     /**
-     * Get post
+     * Get entry
      *
-     * @return \AppBundle\Entity\Recipe
+     * @return \AppBundle\Entity\Comments
      */
-    public function getPost()
+    public function getEntry()
     {
-        return $this->post;
+        return $this->entry;
     }
 }

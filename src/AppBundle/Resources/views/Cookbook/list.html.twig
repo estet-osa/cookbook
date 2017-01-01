@@ -33,7 +33,7 @@
                                 <div class="task">
                                     <div class="inner">
                                         <div class="tsk_img">
-                                            <a href="/show/{{ item.id }}">
+                                            <a href="/recipe/{{ item.id }}">
                                                 <img src="/uploads/{{ item.brochure }}">
                                             </a>
                                         </div>
@@ -45,7 +45,7 @@
                                                 </div>
                                                 <img src="/img/close.gif" onmouseover="task.hlp_show(this)" onmouseout="task.hlp_hide(this)" onclick="task.remove(this)">
                                             </div>
-                                            <a href="/show/{{ item.id }}" class="task_link">{{ item.title }}</a>
+                                            <a href="/recipe/{{ item.id }}" class="task_link">{{ item.title }}</a>
                                         </div>
                                         <p class="task_description">{{ item.description[0:200] | striptags }}...</p>
 

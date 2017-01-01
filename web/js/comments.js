@@ -7,13 +7,20 @@ var Cmt = {
         //Проверяем флаг, можно ли сейчас исполнять манипуляции с лайком и дизлайком
         if(Cmt.votePermissionFlag == 1000){
 
+            var params = {
+                url : '/comment/vote',
+                //data : JSON.stringify(recipes),
+                method : 'post'
+            };
+
             //Устанавливаем флаг в положение false
             this.votePermissionFlag = 50;
 
             //Initiate vars
             var parent      = curr.parentNode,
                 like        = parent.children[0],
-                dislike     = parent.children[1];
+                dislike     = parent.children[1],
+                commentId   = parent.parentNode.parentNode.parentNode.id.substr(8);
 
             //Пытаемся получить свой голос
             var myVote = (parent.querySelector('.my_vote'));
@@ -34,12 +41,23 @@ var Cmt = {
                         //В данный момент у нас уже есть лайк, его нужно отжать
                         this.anotherVoteDown(like);
 
+                        params.data = JSON.stringify({id : commentId, vote : 'dislike', action : 'up'});
+
                     }else if(action == 'like'){
                         like.className = 'like';
                         dislike.className = 'dislike';
 
                         this.voteDown('down', [like, dislike], action);
+
+                        // Set param for ajax sending vote
+                        params.data = JSON.stringify({id : commentId, vote : 'like', action : 'down'});
                     }
+
+                    $.ajax(params, function(entries){
+
+                        console.log(entries)
+                    });
+
                 }
                 //Если текущее нажатие является дизлайком, идем дальше
                 else if(myVote == dislike){
@@ -53,12 +71,23 @@ var Cmt = {
 
                         this.anotherVoteDown(dislike);
 
+                        // Set param for ajax sending vote
+                        params.data = JSON.stringify({id : commentId, vote : 'like', action : 'up'});
+
                     }else if(action == 'dislike'){
                         like.className = 'like';
                         dislike.className = 'dislike';
 
                         this.voteDown('down', [like, dislike], action);
+
+                        // Set param for ajax sending vote
+                        params.data = JSON.stringify({id : commentId, vote : 'dislike', action : 'down'});
                     }
+
+                    $.ajax(params, function(entries){
+
+                        console.log(entries)
+                    });
                 }
             }
             //Если нашего голоса не присутствует, нужно его создать
@@ -70,6 +99,14 @@ var Cmt = {
                     like.className = 'like my_vote';
 
                     this.voteUp('up', [like, dislike], action);
+
+                    // Set param for ajax sending vote
+                    params.data = JSON.stringify({id : commentId, vote : 'like', action : 'up'});
+
+                    $.ajax(params, function(entries){
+
+                        console.log(entries)
+                    });
                 }
 
                 //Если мы нажали на дизлайк, то тоже неплохо нам
@@ -78,6 +115,15 @@ var Cmt = {
                     dislike.className = 'dislike my_vote';
 
                     this.voteUp('up', [like, dislike], action);
+
+
+                    // Set param for ajax sending vote
+                    params.data = JSON.stringify({id : commentId, vote : 'dislike', action : 'up'});
+
+                    $.ajax(params, function(entries){
+
+                        console.log(entries)
+                    });
                 }
 
             }
@@ -109,7 +155,7 @@ var Cmt = {
     anotherVoteDown : function(vote){
 
         //Инициируем переменные, в параметр vote попал элемент (like or dislike)
-        var voteNum  = vote.children[1].children[0].innerHTML;
+        var voteNum  = vote.children[1].children[0].innerHTML.trim();
 
         //Для начала нужно получить число
         //Вычитаем 1 и одновременно преобразуем полученное в строку, что бы посчитать длинну строки
@@ -208,9 +254,9 @@ var Cmt = {
                 //Если значение в поле дизлайк существует, идем дальше
                 if(dislikeNum){
 
-                    var SPAN             = create('SPAN');
+                    var SPAN         = create('SPAN');
                     SPAN.className   = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
-                    SPAN.innerHTML   = moveNum;
+                    SPAN.innerHTML   = moveNum.trim();
 
                     //Подвешиваем созданный элемент
                     vote[1].children[1].children[0].appendChild(SPAN);
@@ -228,9 +274,9 @@ var Cmt = {
                 //Если в поле дизлайк отсутствует значение, идем дальше
                 else{
 
-                    var SPAN           = create('SPAN');
-                    SPAN.className = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
-                    SPAN.innerHTML = moveNum;
+                    SPAN            = create('SPAN');
+                    SPAN.className  = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
+                    SPAN.innerHTML  = moveNum.trim();
 
                     //Подвешиваем созданный элемент
                     vote[1].children[1].appendChild(SPAN);
@@ -251,7 +297,7 @@ var Cmt = {
                 // для сравнения с длинной значения в dislike
                 num = String(num);
 
-                var moveNum = '';
+                moveNum = '';
 
                 for(var i = 0; i < num.length; i++){
                     if(num[i] != likeNum[i])
@@ -263,7 +309,7 @@ var Cmt = {
 
                     var SPAN           = create('SPAN');
                     SPAN.className = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
-                    SPAN.innerHTML = moveNum;
+                    SPAN.innerHTML = moveNum.trim();
 
                     //Подвешиваем созданный элемент
                     vote[0].children[1].children[0].appendChild(SPAN);
@@ -282,9 +328,9 @@ var Cmt = {
                 //Если значения в лайке нету, добавим значение 1 и анмируем лайк
                 else{
 
-                    var SPAN           = create('SPAN');
+                    SPAN           = create('SPAN');
                     SPAN.className = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
-                    SPAN.innerHTML = moveNum;
+                    SPAN.innerHTML = moveNum.trim();
 
                     //Подвешиваем созданный элемент
                     vote[0].children[1].appendChild(SPAN);
@@ -331,10 +377,10 @@ var Cmt = {
                     //Если полученное число больше 0, нужно создать элемент span, и анимировать его
                     if(num >= 1){
 
-                        var SPAN             = create('SPAN');
+                        SPAN             = create('SPAN');
                         SPAN.className   = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
                         SPAN.style.width = 'auto';
-                        SPAN.innerHTML   = moveNum;
+                        SPAN.innerHTML   = moveNum.trim();
 
                         //Подвешиваем созданный элемент
                         vote[1].children[1].children[0].appendChild(SPAN);
@@ -378,7 +424,7 @@ var Cmt = {
                         SPAN             = create('SPAN');
                         SPAN.className   = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
                         SPAN.style.width = vote[1].children[1].clientWidth + 'px';
-                        SPAN.innerHTML   = moveNum;
+                        SPAN.innerHTML   = moveNum.trim();
 
                         //Подвешиваем созданный элемент
                         vote[1].children[1].children[0].appendChild(SPAN);
@@ -410,10 +456,10 @@ var Cmt = {
                     //Если полученное число больше 0, нужно создать элемент span, и анимировать его
                     if(num >= 1){
 
-                        var SPAN             = create('SPAN');
+                        SPAN             = create('SPAN');
                         SPAN.className   = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
                         SPAN.style.width = 'auto';
-                        SPAN.innerHTML   = moveNum;
+                        SPAN.innerHTML   = moveNum.trim();
 
                         //Подвешиваем созданный элемент
                         vote[0].children[1].children[0].appendChild(SPAN);
@@ -448,7 +494,7 @@ var Cmt = {
                         SPAN             = create('SPAN');
                         SPAN.className   = (action == 'down') ? 'vote_num_down' : 'vote_num_up';
                         SPAN.style.width = vote[0].children[1].clientWidth + 'px';
-                        SPAN.innerHTML   = moveNum;
+                        SPAN.innerHTML   = moveNum.trim();
 
                         //Подвешиваем созданный элемент
                         vote[0].children[1].children[0].appendChild(SPAN);

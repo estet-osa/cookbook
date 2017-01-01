@@ -2,6 +2,18 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /connect
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -33,15 +45,6 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
-audio_add_route:
-    path: "/audio/add"
-
-dating_photo_route:
-    path: "/dating/load"
-
-task_success:
-    path: "/set/social"
-
 feedback_add:
     path: "/feedback/add"
 
@@ -59,5 +62,4 @@ my_route:
 
 upload_recipe_img:
     path: /recipe/upload
-
 

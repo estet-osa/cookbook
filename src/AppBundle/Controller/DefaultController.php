@@ -96,7 +96,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/show/{cookbookId}", name="showCookbook")
+     * @Route("/recipe/{cookbookId}", name="showCookbook")
      */
     public function showAction($cookbookId, Request $request)
     {
@@ -109,11 +109,22 @@ class DefaultController extends Controller
         if(!$recipe)
             throw $this->createNotFoundException('No recipe found for id ' . $cookbookId);
 
-        $votes = $em->getRepository('AppBundle:RecipeVote')->findBy(['post' => $cookbookId]);
+        $votes    = $em->getRepository('AppBundle:RecipeVote')->findBy(['post' => $cookbookId]);
+
+        $comments = $em->getRepository('AppBundle:Comments')->findBy(
+            ['recipe' => $cookbookId],
+            ['id' => 'DESC'],
+            6
+        );
+
+        $moreRecipes = $em->getRepository('AppBundle:Recipe')->findBy(
+            [],
+            ['id' => 'DESC'],
+            6
+        );
 
         //Set the client id from hash user agent & user ip
-        $clientId = substr(md5($request->headers->get('User-Agent') .
-            $request->getClientIp(true)), 0, 10);
+        $clientId = substr(md5($request->getClientIp(true)), 0, 10);
 
         //Try get client ip from blog_vote table
         $issetClinetId = $em->getRepository('AppBundle:RecipeVote')->findOneBy(['client_id' => $clientId, 'post' => $cookbookId]);
@@ -127,10 +138,12 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle:Cookbook:show.html.twig', [
-            'recipe'    => $recipe,
-            'clientId'  => $clientId,
-            'votes'     => $votes,
-            'cmtForm'   => $cmtForm->createView()
+            'recipe'        => $recipe,
+            'clientId'      => $clientId,
+            'votes'         => $votes,
+            'comments'      => $comments,
+            'otherRecipes'  => $moreRecipes,
+            'cmtForm'       => $cmtForm->createView()
         ]);
     }
 
@@ -171,7 +184,7 @@ class DefaultController extends Controller
             $em->persist($data);
             $em->flush();
 
-            return $this->redirect('/show/' . $cookbookId);
+            return $this->redirect('/recipe/' . $cookbookId);
         }
 
         return $this->render('AppBundle:Cookbook:edit.html.twig', [
@@ -268,7 +281,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/recipe/vote", name="recipe_vote")
+     * @Route("/recipe/vote/add", name="recipe_vote")
      * @Method("POST")
      */
     public function recipeVoteAction(Request $request)
@@ -279,16 +292,15 @@ class DefaultController extends Controller
         $action = ($data == 'like') ? 1 : 0;
 
         //Set the client id from hash user agent & user ip
-        $clientId = substr(md5($request->headers->get('User-Agent') .
-            $request->getClientIp(true)), 0, 10);
+        $clientId = substr(md5($request->getClientIp(true)), 0, 10);
 
         $referer = explode('/', $request->headers->get('referer'));
-        $blogId  = $referer[4] ?? false;
+        $recipeId  = $referer[4] ?? false;
 
         $em = $this->getDoctrine()->getManager();
         $art = $em->getRepository('AppBundle:RecipeVote')->findOneBy([
             'client_id' => $clientId,
-            'post'      => $blogId
+            'post'      => $recipeId
         ]);
 
         if($art){

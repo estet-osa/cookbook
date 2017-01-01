@@ -25,6 +25,11 @@ class Comments
     protected $recipe;
 
     /**
+     * @ORM\OneToMany(targetEntity="CommentsVote", mappedBy="entry")
+     */
+    private $votes;
+
+    /**
      *  @Assert\Length(
      *      min = 20,
      *      max = 20000,
@@ -34,6 +39,14 @@ class Comments
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $description;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->votes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -91,5 +104,39 @@ class Comments
     public function getRecipe()
     {
         return $this->recipe;
+    }
+
+    /**
+     * Add vote
+     *
+     * @param \AppBundle\Entity\CommentsVote $vote
+     *
+     * @return Comments
+     */
+    public function addVote(\AppBundle\Entity\CommentsVote $vote)
+    {
+        $this->votes[] = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Remove vote
+     *
+     * @param \AppBundle\Entity\CommentsVote $vote
+     */
+    public function removeVote(\AppBundle\Entity\CommentsVote $vote)
+    {
+        $this->votes->removeElement($vote);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 }

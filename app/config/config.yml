@@ -127,3 +127,33 @@ ivory_ck_editor:
         configs:
             my_toolbar_1: [ [ "Source", "-", "Save", "Image", "HorizontalRule" ],  [ "Anchor" ], "/", [ "Maximize" ] ]
 
+hwi_oauth:
+    connect:
+        confirmation: true
+        registration_form: fos_user.registration.form.factory
+    firewall_names:        [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebookId
+            google: googleId
+    resource_owners:
+        facebook:
+            type:          facebook
+            client_id:     187365171726875
+            client_secret: 585ddba52dbf90c54f19515c1bf12238
+            scope:         "email"
+            options:
+                display: popup #dialog is optimized for popup window
+        google:
+            type: google
+            client_id:     408526270710-oqkvo51t28v32dmh9nvf6uq3uukmt218.apps.googleusercontent.com
+            client_secret: Na5mgNAHwk2x76YpKYzZCxWh
+            scope:         "https://www.googleapis.com/auth/plus.login"
+            options:
+                request_visible_actions: "http://schemas.google.com/AddActivity http://schemas.google.com/CommentActivity"
+
+services:
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
+

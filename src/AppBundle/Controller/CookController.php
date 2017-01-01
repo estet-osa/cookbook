@@ -20,7 +20,7 @@ class CookController extends Controller
      */
     public function showAction($cookId, Request $request)
     {
-        echo $currUser = $this->getUser()->getId();
+        $currUser = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Cook')->find($currUser);
 
@@ -60,6 +60,21 @@ class CookController extends Controller
 
 
         return $this->render('AppBundle:Cook:recipes.html.twig', [
+
+        ]);
+    }
+
+
+    /**
+     * @Route("/demo/secured", name="demo")
+     */
+    public function demoAction(Request $request)
+    {
+
+
+
+
+        return $this->render('AppBundle:Main:hello.html.twig', [
 
         ]);
     }

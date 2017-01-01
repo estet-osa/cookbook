@@ -2,7 +2,7 @@
 
 var d = document, w = window;
 
-w.onload = function () {
+window.onload = function () {
 
     if(getId('ingredientList'))
         if(getId('ingredientList').children.length <= 0)
@@ -20,6 +20,9 @@ w.onload = function () {
     // If current page jornal
     if(location.pathname == '/jornal')
         rcp.find();
+
+    if(getId('tabs_block'))
+        $.tabSwitch(false);
 
 };
 
@@ -531,7 +534,40 @@ var $ = {
                 }
             }
         }
+    },
+
+    tabSwitch : function (elem) {
+
+        var tabs = getId('tabs_block'),
+            recipeTbs = localStorage.getItem('recipeTabs');
+
+        if(!elem)
+            var currIdx = (recipeTbs != '') ? recipeTbs : 0;
+        else
+            currIdx = [].indexOf.call(tabs.children, elem);
+
+        // Set current index in localStorage
+        localStorage.recipeTabs = currIdx;
+
+        var list    = getId('tabs_views_block');
+
+
+        // Set current tab in active && and other tab button change to default
+        for(var tabI = 0; tabI < tabs.children.length; tabI++)
+            if(tabI == currIdx)
+                tabs.children[tabI].className = 'active';
+            else
+                tabs.children[tabI].className = '';
+
+        for(var i = 0; i < list.children.length; i++)
+            if(i == currIdx)
+                list.children[currIdx].style.display = 'block';
+            else
+                list.children[i].style.display = 'none';
     }
+
+
+
 };
 
 var srch = {
@@ -720,7 +756,7 @@ var recipe = {
             dislikeVal    = parseInt(dislike.children[1].innerHTML);
 
         var params = {
-            url : '/recipe/vote',
+            url : '/recipe/vote/add',
             data : action,
             method : 'post'
         };

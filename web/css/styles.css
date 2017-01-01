@@ -588,7 +588,7 @@ border-radius: 14px;
 }
 /*=== ingredients ===*/
 ul.ingredients_list{
-    margin: 10px 0 20px;
+    margin: 10px 0 0 0;
 }
 ul.ingredients_list > li{
     width: 100%;
@@ -719,6 +719,14 @@ ul.ingrdt_group_nav_list > li:hover span{color: #111}
     text-decoration: underline;
 }
 .ingr_tabs_wrp > h3 > a:hover{text-decoration: none}
+
+.tabs_views{
+    width: 100%;
+}
+.tabs_views > .tab{
+
+}
+.tabs_views > .tab > div{padding: 20px 0 30px 0}
 
 .ingredients_list_wrp{margin: 20px 0 0 0}
 
@@ -955,12 +963,12 @@ transition: opacity 0.1s ease-in-out;
     opacity: 1;
 }
 .comment_vote_list .vote_count span{
-    color: #888;
-    font-weight: 600;
+    color: #555;
+    font-family: Roboto, sans-serif;
+    font-weight: 800;
     font-size: 11px;
     background: #FFF;
 }
-
 .comment_editor_link{
     width: 150px;
     height: 26px;
@@ -1068,7 +1076,9 @@ ul.more_recipes_list > li > .inner .created_at{
     bottom: 0;
 }
 ul.more_recipes_list > li .picture_wrp{
-    width: 100%;
+    width: 185px;
+    height: 120px;
+    overflow: hidden;
     margin: 0 0 5px 0;
 }
 ul.more_recipes_list > li .picture_wrp img{
@@ -1084,11 +1094,13 @@ transition: opacity 0.15s ease-in-out;
 ul.more_recipes_list > li .picture_wrp img:hover{opacity: 1}
 
 ul.more_recipes_list > li > .inner > a{
+    width: 100%;
     height: 60px;
     font-size: 17px;
     color: #555;
     overflow: hidden;
     display: inline-block;
+    line-height: 15px;
     font-weight: 600;
 }
 ul.more_recipes_list > li a:hover{

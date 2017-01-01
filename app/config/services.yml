@@ -24,3 +24,7 @@ services:
         arguments: [~, AppBundle\Entity\Ingredients, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Recipes", label: Ingredients }
+
+    my.custom.user_provider:
+        class:        MyBundle\Security\Core\User\MyFOSUBUserProvider
+        arguments: ['@fos_user.user_manager', { facebook: facebook_id }]

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comments;
+use AppBundle\Entity\CommentsVote;
 use AppBundle\Form\CommentsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -59,5 +60,57 @@ class CommentsController extends Controller
                     return new JsonResponse(['error' => 'length']);
             }
         }
+    }
+
+    /**
+     * @Route("/comment/vote", name="comment_vote")
+     * @Method("POST")
+     */
+    public function commentVote(Request $request)
+    {
+        $data       = $request->request->get('data');
+        $json       = json_decode($data);
+        $commentId  = $json->id;
+
+        if ($json->action != 'down')
+            $userVote = ($json->vote == 'like') ? 1 : 2;
+        else
+            $userVote = 0;
+
+        //Set the client id from hash user agent & user ip
+        $clientId = substr(md5($request->getClientIp(true)), 0, 10);
+
+        $referer = explode('/', $request->headers->get('referer'));
+        $recipeId  = $referer[4] ?? false;
+
+        $em      = $this->getDoctrine()->getManager();
+        $comment = $em->getRepository('AppBundle:Comments')->find($commentId);
+        $vote    = $em->getRepository('AppBundle:CommentsVote')->findOneBy([
+            'client_id' => $clientId,
+            'entry'     => $commentId
+        ]);
+
+        if($vote){
+
+            $vote->setUserVote(1);
+            $vote->setClientId($clientId);
+            $vote->setUserVote($userVote);
+            $vote->setEntry($comment);
+
+            $em->persist($vote);
+            $em->flush();
+
+        }else{
+
+            $newVote = new CommentsVote();
+            $newVote->setUserVote($userVote);
+            $newVote->setClientId($clientId);
+            $newVote->setEntry($comment);
+
+            $em->persist($newVote);
+            $em->flush();
+        }
+
+        return new Response('vote ok');
     }
 }

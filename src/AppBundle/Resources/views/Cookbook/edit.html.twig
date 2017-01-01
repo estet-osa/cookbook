@@ -1,5 +1,9 @@
 {% extends 'AppBundle:Main:base.html.twig' %}
 
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/recipe-edit.css?%s') | format(random(998)) }}">
+{% endblock styles %}
+
 {% block body %}
 
     <div class="all">
@@ -68,6 +72,95 @@
 
         </div>
 
+        <div class="ingr_modal_wrp"><!-- ingredients modal -->
+            <div class="ingr_modal">
+                <div class="head">
+                    <div class="close_btn"><img src="/img/close.gif" alt="закрыть модальное окно"></div>
+                    <div class="text">Добавьте ингредиенты к блюду.</div>
+                </div>
+
+                <br>
+
+                <div class="editable">
+                    <div class="field_section_wrap">
+                        <input type="text" id="ingredient_key" value="" placeholder="Вес, колличество и.т.д, например: «120гр»">
+                    </div>
+                    <div class="field_section_wrap">
+                        <input type="text" id="ingredient_val" value="" placeholder="Название ингредиента, например: «баклажаны»">
+                        <button id="pricegen_value_btn" onclick="modal.addVal(this.previousElementSibling)"></button>
+                    </div>
+                </div>
+
+                <div id="modal_added_list_wrapper" class="added_ingredients_list_wrapper">
+                    <div class="title"><abbr title="">Список добавленных ингредиентов</abbr></div>
+
+                    <ul class="modal_value_list">
+                        <li onclick="return rcp.editIngredient(this)">
+                            <div class="item">Hello, im here</div>
+                            <div class="item">100 грамм.</div>
+                            <div class="del" onclick="modal.delCurrentValue(this)">
+                                <img src="/img/close_white.gif">
+                            </div>
+                        </li>
+                        <li onclick="return rcp.editIngredient(this)">
+                            <div class="item">Баклажаны в острой приправе с огурцами</div>
+                            <div class="item">10 штук.</div>
+                            <div class="del" onclick="modal.delCurrentValue(this)">
+                                <img src="/img/close_white.gif">
+                            </div>
+                        </li>
+                        <li onclick="return rcp.editIngredient(this)">
+                            <div class="item">100 кг.</div>
+                            <div class="item">100 кг.</div>
+                            <div class="del" onclick="modal.delCurrentValue(this)">
+                                <img src="/img/close_white.gif">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="modal_footer_wrp">
+                    <div class="inner">
+                        <button class="save_ingredient_btn">Сохранить</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
 {% endblock body %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

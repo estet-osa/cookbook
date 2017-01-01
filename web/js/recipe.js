@@ -178,6 +178,18 @@ var rcp = {
             editor.style.display = 'none';
 
 
+    },
+
+
+    editIngredient : function (elem) {
+
+        var key = getId('ingredient_key'),
+            val = getId('ingredient_val');
+
+
+        key.value = elem.children[1].innerHTML;
+        val.value = elem.children[0].innerHTML;
+
     }
 
 

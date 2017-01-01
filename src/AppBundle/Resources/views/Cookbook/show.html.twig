@@ -48,13 +48,13 @@
                         <p class="full_description">{{ recipe.description | raw }}</p>
 
                         <div class="tabs"><!-- tabs -->
-                            <ul class="tabs_list">
-                                <li class="active">
+                            <ul id="tabs_block" class="tabs_list">
+                                <li class="active" onclick="$.tabSwitch(this)">
                                     <div class="inner">
                                         <span>Ингредиенты</span>
                                     </div>
                                 </li>
-                                <li>
+                                <li onclick="$.tabSwitch(this)">
                                     <div class="inner">
                                         <span>Пищевая ценность</span>
                                     </div>
@@ -62,23 +62,53 @@
                             </ul>
                         </div>
 
-                        {%  if recipe.ingredient|length > 0 %}
+                        <div id="tabs_views_block" class="tabs_views">
+                            <div class="tab">
 
-                            <br>
-                            <h2 id="ingredientsHead">Ингредиенты</h2>
+                                <div>
+                                    {%  if recipe.ingredient|length > 0 %}
 
-                            <ul id="ingredientList" class="ingredients_list">
+                                        <h2 id="ingredientsHead">Ингредиенты</h2>
 
-                                {% for item in recipe.ingredient %}
-                                    <li id="ingredient">
-                                        <div class="cover">
-                                            <span class="item_ingredient">{{ item.title }}</span>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                            <br>
-                        {% endif %}
+                                        <ul id="ingredientList" class="ingredients_list">
+
+                                            {% for item in recipe.ingredient %}
+                                                <li id="ingredient">
+                                                    <div class="cover">
+                                                        <span class="item_ingredient">{{ item.title }}</span>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            <div class="tab">
+
+                                <div>
+                                    <h2>Пищевая ценность</h2>
+
+                                    {%  if recipe.ingredient|length > 0 %}
+
+                                        <ul id="ingredientList" class="ingredients_list">
+
+                                            {% for item in recipe.ingredient %}
+                                                <li id="ingredient">
+                                                    <div class="cover">
+                                                        <span class="item_ingredient">{{ item.title }}</span>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -161,122 +191,73 @@
                 <div id="comments" class="comments"><!-- comments -->
 
                     <ul id="commentsList" class="comments_list">
-                        <li>
-                            <div class="cover">
-                                <div>
+
+                        {% if comments|length > 0 %}
+
+                            {% for comment in comments %}
+
+                                {% set vote_likes    = [] %}
+                                {% set vote_dislikes = [] %}
+                                {% set myVoteLike    = false %}
+                                {% set myVoteDislike = false %}
+                                {% set likesCount    = false %}
+                                {% set dislikesCount = false %}
+
+                                {% for vote in comment.votes %}
+
+                                    {% if vote.userVote == 1 %}
+
+                                        {% set vote_likes = vote_likes | merge([vote.userVote]) %}
+
+                                        {% if vote.clientId == clientId %}
+                                            {% set myVoteLike = ' my_vote' %}
+                                        {% endif %}
+
+                                    {% elseif vote.userVote == 2 %}
+
+                                        {% set vote_dislikes = vote_dislikes | merge([vote.userVote]) %}
+
+                                        {% if vote.clientId == clientId %}
+                                            {% set myVoteDislike = ' my_vote' %}
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if vote_likes|length > 0 %}
+                                    {% set likesCount = vote_likes|length %}
+                                {% endif %}
+
+                                {% if vote_dislikes|length > 0 %}
+                                    {% set dislikesCount = vote_dislikes|length %}
+                                {% endif %}
+
+                                <li id="comment_{{ comment.id }}">
                                     <div class="comment_wrapper">
                                         <div class="comment_bar">
-                                            <a href="/" target="_blank" class="name">Филипенко клавдия</a>
+                                            <a href="/cook/1" target="_blank" class="name">Филипенко клавдия</a>
                                             <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
                                         </div>
                                         <div class="comment">
-                                            <div class="owner">
-                                                <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
-                                            </div>
-
+                                            <div class="owner"><a href="/" target="_blank"><img src="../img/avatar_mini.jpg"></a></div>
                                             <div class="comment_vote_list">
-                                                <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
+                                                <div class="like{{ myVoteLike }}" onclick="return Cmt.vote('11_2', 'like', this)">
                                                     <img src="/img/comment_like.png">
-                                                    <div class="vote_count"><span style="width: 20px;">99</span></div>
+                                                    <div class="vote_count"><span>{{ likesCount|trim }}</span></div>
                                                 </div>
-                                                <div class="dislike my_vote" onclick="return Cmt.vote('11_2', 'dislike', this)">
+                                                <div class="dislike{{ myVoteDislike }}" onclick="return Cmt.vote('11_2', 'dislike', this)">
                                                     <img src="/img/comment_dislike.png">
-                                                    <div class="vote_count"><span style="width: 20px;">100</span></div>
+                                                    <div class="vote_count"><span>{{ dislikesCount|trim }}</span></div>
                                                 </div>
                                             </div>
-
-                                   <span class="txt">
-                                       тут какой  то комментарий
-                                   </span>
+                                           <span class="txt">{{ comment.description }}</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="comment_wrapper">
-                                <div class="comment_bar">
-                                    <a href="/" target="_blank" class="name">Филипенко клавдия</a>
-                                    <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
-                                </div>
-                                <div class="comment">
-                                    <div class="owner">
-                                        <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
-                                    </div>
+                                </li>
 
-                                    <div class="comment_vote_list">
-                                        <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
-                                            <img src="/img/comment_like.png">
-                                            <div class="vote_count"><span style="width: 20px;">99</span></div>
-                                        </div>
-                                        <div class="dislike my_vote" onclick="return Cmt.vote('11_2', 'dislike', this)">
-                                            <img src="/img/comment_dislike.png">
-                                            <div class="vote_count"><span style="width: 20px;">100</span></div>
-                                        </div>
-                                    </div>
-
-                                   <span class="txt">
-                                       тут какой  то комментарий
-                                   </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="comment_wrapper">
-                                <div class="comment_bar">
-                                    <a href="/" target="_blank" class="name">Филипенко клавдия</a>
-                                    <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
-                                </div>
-                                <div class="comment">
-                                    <div class="owner">
-                                        <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
-                                    </div>
-
-                                    <div class="comment_vote_list">
-                                        <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
-                                            <img src="/img/comment_like.png">
-                                            <div class="vote_count"><span style="width: 20px;">99</span></div>
-                                        </div>
-                                        <div class="dislike" onclick="return Cmt.vote('11_2', 'dislike', this)">
-                                            <img src="/img/comment_dislike.png">
-                                            <div class="vote_count"><span style="width: 20px;">100</span></div>
-                                        </div>
-                                    </div>
-
-                                   <span class="txt">
-                                       тут какой  то комментарий тут то комментарий тут то комментарий тут то комментарий тут то комментарий тут то комментарий тут каF7EEEFF7EEEFкой то комментарий тут какой то комментарийтут какой то комментарийтут какой то комментарийтут какой то комментарий
-                                   </span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="comment_wrapper">
-                                <div class="comment_bar">
-                                    <a href="/" target="_blank" class="name">Филипенко клавдия</a>
-                                    <div class="created_at"><span>25 дек 2016 в 14:00</span></div>
-                                </div>
-                                <div class="comment">
-                                    <div class="owner">
-                                        <a href="/" target="_blank"><img src="../img/avatar_mini.jpg" alt=""></a>
-                                    </div>
-
-                                    <div class="comment_vote_list">
-                                        <div class="like" onclick="return Cmt.vote('11_2', 'like', this)">
-                                            <img src="/img/comment_like.png">
-                                            <div class="vote_count"><span style="width: 20px;">99</span></div>
-                                        </div>
-                                        <div class="dislike my_vote" onclick="return Cmt.vote('11_2', 'dislike', this)">
-                                            <img src="/img/comment_dislike.png">
-                                            <div class="vote_count"><span style="width: 20px;">100</span></div>
-                                        </div>
-                                    </div>
-
-                                   <span class="txt">
-                                       тут какой  то комментарий тут то комментарий тут то комментарий тут то комментарий тут то комментарий тут то комментарий тут каF7EEEFF7EEEFкой то комментарий тут какой то комментарийтут какой то комментарийтут какой то комментарийтут какой то комментарий
-                                   </span>
-                                </div>
-                            </div>
-                        </li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
 
                 </div>
@@ -286,60 +267,21 @@
                     <h2>Другие интересные рецепты</h2>
 
                     <ul class="more_recipes_list">
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="inner">
-                                <div class="picture_wrp">
-                                    <a href=""><img src="/uploads/d0fb3.jpeg"></a>
-                                </div>
-                                <div class="created_at">24.12.11 в 14:02</div>
-                                <a href="">Какой то заголовок, какого то блюдаКакой то заголовок, какого то блюда</a>
-                            </div>
-                        </li>
+
+                        {% if otherRecipes|length > 0 %}
+                            {% for otherRecipe in otherRecipes %}
+                                <li>
+                                    <div class="inner">
+                                        <div class="picture_wrp">
+                                            <a href="/recipe/{{ otherRecipe.id }}"><img src="/uploads/{{ otherRecipe.brochure }}"></a>
+                                        </div>
+                                        <div class="created_at">{{ otherRecipe.created | date('d.m.y в H:i') }}</div>
+                                        <a href="">{{ otherRecipe.title }}</a>
+                                    </div>
+                                </li>
+
+                            {% endfor %}
+                        {% endif %}
 
                     </ul>
 
@@ -365,6 +307,7 @@
                         <div class="cover"></div>
                     </li>
                 </ul>
+
 
             </div>
 
